@@ -1903,7 +1903,7 @@
             <span class="material-symbols-outlined text-base">credit_card</span> Donate $<span id="btn-donate-amount-label">25</span> One-Time (Stripe / Card)
           </button>
           <div class="grid grid-cols-2 gap-2">
-            <a href="https://github.com/sponsors" target="_blank" class="py-2.5 px-3 rounded-xl glass-button text-center font-mono font-bold text-xs flex items-center justify-center gap-1.5 text-slate-800 dark:text-slate-200">
+            <a href="https://github.com/sponsors/Axialon" target="_blank" class="py-2.5 px-3 rounded-xl glass-button text-center font-mono font-bold text-xs flex items-center justify-center gap-1.5 text-slate-800 dark:text-slate-200" title="Sponsor Axialon on GitHub">
               <span class="material-symbols-outlined text-sm text-rose-500">favorite</span> GitHub Sponsors
             </a>
             <button id="btn-simulate-edge-donation" class="py-2.5 px-3 rounded-xl glass-button text-center font-mono font-black text-xs text-emerald-700 dark:text-emerald-300 flex items-center justify-center gap-1 border border-emerald-500/40 hover:bg-emerald-500/10">
@@ -4024,16 +4024,31 @@
       // Donate via Card Action
       const btnDonateCard = document.getElementById('btn-donate-card-action');
       if (btnDonateCard) {
-        btnDonateCard.addEventListener('click', () => {
-          const donorName = (document.getElementById('input-donor-name')?.value || 'Anonymous Backer').trim();
-          showToast(`Processing one-time contribution of $${selectedDonationAmount} USD...`);
-          setTimeout(() => {
-            const tier = selectedDonationAmount >= 25 ? 2 : 1;
-            setBackerTier(tier, `STRIPE-${Date.now()}`);
-            recordLiveDonation(donorName, selectedDonationAmount);
-            showToast(`🎉 Thank you ${donorName}! Your $${selectedDonationAmount} contribution unlocked all 8 Backer Shaders!`);
-            if (pendingLockedShaderKey) applyShaderPreset(pendingLockedShaderKey);
-          }, 600);
+        btnDonateCard.addEventListener('click', async () => {
+          const donorName = (document.getElementById('input-donor-name')?.value || 'Community Backer').trim();
+          const amount = selectedDonationAmount || 25;
+          showToast(`Processing one-time contribution of $${amount} USD...`);
+          
+          let token = `BOXEM-CARD-${Date.now()}`;
+          let tier = amount >= 25 ? 2 : 1;
+
+          try {
+            const res = await fetch('/api/donate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ donorName, amount })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (data.backerToken) token = data.backerToken;
+              if (data.tier) tier = data.tier;
+            }
+          } catch (e) {}
+
+          setBackerTier(tier, token);
+          recordLiveDonation(donorName, amount, token);
+          showToast(`🎉 Thank you ${donorName}! Tier ${tier} Perks Unlocked! Token: ${token}`);
+          if (pendingLockedShaderKey) applyShaderPreset(pendingLockedShaderKey);
         });
       }
 
@@ -4043,18 +4058,26 @@
         btnSimulateEdge.addEventListener('click', async () => {
           const donorName = (document.getElementById('input-donor-name')?.value || 'Edge Supporter').trim();
           const amount = selectedDonationAmount || 25;
+          
+          let token = `BOXEM-EDGE-${Date.now()}`;
+          let tier = amount >= 25 ? 2 : 1;
+
           try {
-            await fetch('/api/donate', {
+            const res = await fetch('/api/donate', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ donorName, amount })
             });
+            if (res.ok) {
+              const data = await res.json();
+              if (data.backerToken) token = data.backerToken;
+              if (data.tier) tier = data.tier;
+            }
           } catch (e) {}
 
-          const tier = amount >= 25 ? 2 : 1;
-          setBackerTier(tier, `EDGE-${Date.now()}`);
-          recordLiveDonation(donorName, amount);
-          showToast(`⚡ Instant Edge Donation Verified! All 8 Backer Shaders Unlocked!`);
+          setBackerTier(tier, token);
+          recordLiveDonation(donorName, amount, token);
+          showToast(`⚡ Instant Edge Donation Verified! Tier ${tier} Perks Unlocked! Token: ${token}`);
           if (pendingLockedShaderKey) applyShaderPreset(pendingLockedShaderKey);
         });
       }
@@ -4063,16 +4086,16 @@
       if (btnVerifyKey) {
         btnVerifyKey.addEventListener('click', () => {
           const keyInput = document.getElementById('backer-key-input');
-          const key = (keyInput ? keyInput.value : '').trim().toLowerCase();
+          const key = (keyInput ? keyInput.value : '').trim().toUpperCase();
           if (!key) {
-            showToast('Please enter a backer key or receipt ID.');
+            showToast('Please enter a backer token or GitHub handle.');
             return;
           }
-          if (key.includes('25') || key.includes('studio') || key.includes('tier2') || key.includes('pro')) {
-            setBackerTier(2, key.toUpperCase());
+          if (key.includes('25') || key.includes('STUDIO') || key.includes('TIER2') || key.includes('PRO') || key.startsWith('BOXEM-')) {
+            setBackerTier(2, key);
             showToast('💎 Verified! Tier 2 Studio Backer perks unlocked!');
           } else {
-            setBackerTier(1, key.toUpperCase());
+            setBackerTier(1, key);
             showToast('👑 Verified! Tier 1 Supporter perks unlocked!');
           }
           if (pendingLockedShaderKey) {
@@ -4081,15 +4104,15 @@
         });
       }
 
-      function recordLiveDonation(name, amount) {
+      function recordLiveDonation(name, amount, token) {
         const listContainer = document.getElementById('ticker-list-container');
         if (listContainer) {
           const newRow = document.createElement('div');
           newRow.className = "p-3 rounded-xl glass-card-sub flex justify-between items-center text-xs font-mono bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-500/40";
           newRow.innerHTML = `
             <div>
-              <span class="font-black text-emerald-950 dark:text-emerald-200">✨ ${name} (Just Now)</span>
-              <div class="text-[10px] text-slate-500">Tier ${amount >= 25 ? '2 Studio' : '1 Supporter'} • Unlocked All Shaders</div>
+              <span class="font-black text-emerald-950 dark:text-emerald-200">✨ ${name} (Verified)</span>
+              <div class="text-[10px] text-slate-500">${token ? `Token: ${token.slice(0, 16)}... • ` : ''}Tier ${amount >= 25 ? '2 Studio' : '1 Supporter'} • Unlocked All Shaders</div>
             </div>
             <span class="font-black text-emerald-700 dark:text-emerald-400">+$${parseFloat(amount).toFixed(2)}</span>
           `;

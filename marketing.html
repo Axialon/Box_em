@@ -2924,15 +2924,20 @@
       btn.addEventListener('click', async () => {
         const tier = btn.getAttribute('data-tier') || '2';
         const amount = btn.getAttribute('data-amount') || '25';
+        let token = `BOXEM-SHOWCASE-${Date.now()}`;
         try {
-          await fetch('/api/donate', {
+          const res = await fetch('/api/donate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ donorName: 'Showcase Supporter', amount: parseFloat(amount) })
+            body: JSON.stringify({ donorName: 'Showcase Backer', amount: parseFloat(amount) })
           });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.backerToken) token = data.backerToken;
+          }
         } catch (e) {}
-        localStorage.setItem('boxem_backer_status', JSON.stringify({ tier: parseInt(tier), unlocked: true, timestamp: Date.now() }));
-        showToast(`🎉 Thank you! $${amount} One-Time Contribution Processed! All 8 Backer Shaders Unlocked!`);
+        localStorage.setItem('boxem_backer_status', JSON.stringify({ tier: parseInt(tier), backerToken: token, unlocked: true, timestamp: Date.now() }));
+        showToast(`🎉 Thank you! $${amount} Backing Verified! Token: ${token}`);
       });
     });
               /* Brand Header Logo Click Trigger for 3D Laser Scanner Sweep */
