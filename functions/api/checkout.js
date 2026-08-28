@@ -24,10 +24,19 @@ export async function onRequestPost(context) {
     // If Stripe Secret Key is provided, create direct Stripe Checkout Session via Stripe REST API
     if (stripeKey) {
       const params = new URLSearchParams();
+      const tierImageMap = {
+        1: `${origin}/assets/images/tier_1_coffee_shaders.png`,
+        2: `${origin}/assets/images/tier_2_studio_craftsman.png`,
+        3: `${origin}/assets/images/tier_3_agency_powerhouse.png`,
+        4: `${origin}/assets/images/tier_4_enterprise_patron.png`
+      };
+      const tierImage = tierImageMap[tier] || `${origin}/assets/images/tier_2_studio_craftsman.png`;
+
       params.append('payment_method_types[0]', 'card');
       params.append('line_items[0][price_data][currency]', 'usd');
       params.append('line_items[0][price_data][product_data][name]', `Blackboxes Box'em - ${tierLabel} ($${amount} USD)`);
-      params.append('line_items[0][price_data][product_data][description]', `Voluntary 1-time contribution by ${donorName}. Unlocks all 8 Backer Shaders and Custom 3D Mesh Perks.`);
+      params.append('line_items[0][price_data][product_data][description]', `Voluntary 1-time contribution by ${donorName}. Unlocks all 8 Backer Shaders, 4 Custom 3D Node Meshes, and Unbranded 4K Embeds.`);
+      params.append('line_items[0][price_data][product_data][images][0]', tierImage);
       params.append('line_items[0][price_data][unit_amount]', Math.round(amount * 100).toString());
       params.append('line_items[0][quantity]', '1');
       params.append('mode', 'payment');

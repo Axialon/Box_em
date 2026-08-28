@@ -1859,7 +1859,19 @@
 
       <!-- Functional 1-Time Donation Interface -->
       <div class="space-y-3 p-4 rounded-2xl glass-card-sub border border-indigo-500/30">
-        <div class="flex justify-between items-center">
+        <!-- Interactive 3D Model Hologram Preview -->
+        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950/80 border border-indigo-500/40 flex items-center justify-center shadow-inner">
+          <canvas id="donation-3d-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+          <div class="absolute top-2.5 left-3 flex items-center gap-1.5 pointer-events-none">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="donation-3d-label" class="text-[10px] font-mono font-black text-indigo-300 tracking-wider uppercase">Tier 2: Studio Craftsman 3D Core</span>
+          </div>
+          <div class="absolute bottom-2 right-3 text-[9px] font-mono text-slate-400 pointer-events-none flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs text-sky-400">3d_rotation</span> Drag to Inspect 3D Perk
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center pt-1">
           <div class="text-xs font-mono uppercase font-black text-slate-950 dark:text-slate-100 flex items-center gap-1.5">
             <span class="material-symbols-outlined text-sm text-indigo-500">favorite</span> Select Contribution Tier
           </div>
@@ -3996,6 +4008,118 @@
         });
       });
 
+      // 3D Donation Hologram Reactor Engine
+      let donation3dScene, donation3dCamera, donation3dRenderer, donation3dCore, donation3dSatellites = [];
+      function initDonationHologram() {
+        const canvas = document.getElementById('donation-3d-canvas');
+        if (!canvas || !window.THREE) return;
+
+        donation3dScene = new THREE.Scene();
+        const width = canvas.clientWidth || 400;
+        const height = canvas.clientHeight || 150;
+        donation3dCamera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+        donation3dCamera.position.set(0, 0, 4.5);
+
+        donation3dRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        donation3dRenderer.setSize(width, height);
+        donation3dRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const ambLight = new THREE.AmbientLight(0xffffff, 1.2);
+        donation3dScene.add(ambLight);
+        const pointLight = new THREE.PointLight(0x38bdf8, 3, 10);
+        pointLight.position.set(2, 2, 3);
+        donation3dScene.add(pointLight);
+
+        // Core Crystal Matrix
+        const coreGeo = new THREE.IcosahedronGeometry(1.0, 0);
+        const coreMat = new THREE.MeshPhysicalMaterial({
+          color: 0xa855f7,
+          emissive: 0x581c87,
+          emissiveIntensity: 0.4,
+          roughness: 0.15,
+          metalness: 0.3,
+          wireframe: false,
+          flatShading: true
+        });
+        donation3dCore = new THREE.Mesh(coreGeo, coreMat);
+        donation3dScene.add(donation3dCore);
+
+        // Orbiting Satellite Particles
+        for (let i = 0; i < 3; i++) {
+          const satGeo = new THREE.OctahedronGeometry(0.2, 0);
+          const satMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true });
+          const satMesh = new THREE.Mesh(satGeo, satMat);
+          donation3dScene.add(satMesh);
+          donation3dSatellites.push(satMesh);
+        }
+
+        // Drag to Rotate
+        let isDragging = false, prevX = 0, prevY = 0;
+        canvas.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', e => {
+          if (!isDragging || !donation3dCore) return;
+          const dx = e.clientX - prevX;
+          const dy = e.clientY - prevY;
+          donation3dCore.rotation.y += dx * 0.015;
+          donation3dCore.rotation.x += dy * 0.015;
+          prevX = e.clientX;
+          prevY = e.clientY;
+        });
+
+        // Animation Loop
+        let angle = 0;
+        function animateDonation3d() {
+          requestAnimationFrame(animateDonation3d);
+          const modal = document.getElementById('modal-ticker');
+          if (modal && modal.classList.contains('hidden')) return;
+
+          if (donation3dCore && !isDragging) {
+            donation3dCore.rotation.y += 0.012;
+            donation3dCore.rotation.x += 0.006;
+          }
+
+          angle += 0.025;
+          donation3dSatellites.forEach((sat, i) => {
+            const offset = (i * Math.PI * 2) / 3;
+            sat.position.set(
+              Math.cos(angle + offset) * 1.8,
+              Math.sin(angle * 1.5 + offset) * 0.6,
+              Math.sin(angle + offset) * 1.8
+            );
+            sat.rotation.y += 0.03;
+          });
+
+          donation3dRenderer.render(donation3dScene, donation3dCamera);
+        }
+        animateDonation3d();
+      }
+
+      function updateHologramTier(amount) {
+        const label = document.getElementById('donation-3d-label');
+        if (!donation3dCore) return;
+        const tier = amount >= 100 ? 4 : (amount >= 50 ? 3 : (amount >= 25 ? 2 : 1));
+        if (tier === 1) {
+          donation3dCore.material.color.setHex(0xf59e0b);
+          donation3dCore.material.emissive.setHex(0x78350f);
+          if (label) label.textContent = 'Tier 1: Coffee & Shaders (Kintsugi Gold)';
+        } else if (tier === 2) {
+          donation3dCore.material.color.setHex(0xa855f7);
+          donation3dCore.material.emissive.setHex(0x581c87);
+          if (label) label.textContent = 'Tier 2: Studio Craftsman 3D Core (All Shaders)';
+        } else if (tier === 3) {
+          donation3dCore.material.color.setHex(0x38bdf8);
+          donation3dCore.material.emissive.setHex(0x0369a1);
+          if (label) label.textContent = 'Tier 3: Agency Powerhouse Matrix';
+        } else {
+          donation3dCore.material.color.setHex(0xe2e8f0);
+          donation3dCore.material.emissive.setHex(0x4338ca);
+          if (label) label.textContent = 'Tier 4: Enterprise Patron Obsidian Core';
+        }
+      }
+
+      setTimeout(initDonationHologram, 300);
+
       // Tier Selection Pills
       let selectedDonationAmount = 25;
       const donationTierBtns = document.querySelectorAll('.donation-tier-btn');
@@ -4011,6 +4135,7 @@
           selectedDonationAmount = parseInt(btn.dataset.amount) || 25;
           if (amountInput) amountInput.value = selectedDonationAmount;
           if (amountLabel) amountLabel.textContent = selectedDonationAmount;
+          updateHologramTier(selectedDonationAmount);
         });
       });
 
@@ -4018,6 +4143,7 @@
         amountInput.addEventListener('input', () => {
           selectedDonationAmount = parseInt(amountInput.value) || 25;
           if (amountLabel) amountLabel.textContent = selectedDonationAmount;
+          updateHologramTier(selectedDonationAmount);
         });
       }
 
