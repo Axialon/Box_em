@@ -538,16 +538,57 @@
       </nav>
 
       <!-- Header Actions -->
-      <div class="flex items-center gap-3">
-        <button id="btn-toggle-dark" class="p-2.5 rounded-xl glass-button text-slate-700 dark:text-slate-300" title="Toggle Dark/Light Mode">
-          <span class="material-symbols-outlined text-xl dark:hidden">dark_mode</span>
-          <span class="material-symbols-outlined text-xl hidden dark:inline">light_mode</span>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="btn-toggle-dark" class="p-2 sm:p-2.5 rounded-xl glass-button text-slate-700 dark:text-slate-300" title="Toggle Dark/Light Mode">
+          <span class="material-symbols-outlined text-lg sm:text-xl dark:hidden">dark_mode</span>
+          <span class="material-symbols-outlined text-lg sm:text-xl hidden dark:inline">light_mode</span>
         </button>
 
-        <a href="index.html" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-mono font-black shadow-lg shadow-sky-600/20 flex items-center gap-2 transition-all hover:scale-[1.02]">
+        <a href="index.html" class="hidden sm:flex px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-mono font-black shadow-lg shadow-sky-600/20 items-center gap-2 transition-all hover:scale-[1.02]">
           <span>Launch Master Engine</span>
           <span class="material-symbols-outlined text-base">open_in_new</span>
         </a>
+
+        <!-- Compact Mobile Nav Menu Trigger -->
+        <button id="btn-showcase-nav-menu" class="md:hidden glass-button px-3 py-2 rounded-xl flex items-center gap-1.5 text-xs font-mono font-black text-slate-800 dark:text-slate-200 border border-sky-500/30" title="Open Navigation Menu">
+          <span class="material-symbols-outlined text-base text-sky-400">grid_view</span>
+          <span>Menu</span>
+          <span class="material-symbols-outlined text-xs text-slate-400 transition-transform duration-200" id="icon-showcase-menu-chevron">expand_more</span>
+        </button>
+      </div>
+
+      <!-- Mobile Nav Dropdown Popover -->
+      <div id="showcase-nav-dropdown" class="hidden absolute top-16 right-4 w-72 glass-panel p-3 rounded-2xl shadow-2xl border border-indigo-500/40 backdrop-blur-2xl transition-all duration-200 z-50">
+        <div class="text-[10px] font-mono font-black uppercase text-slate-400 tracking-wider mb-2 px-1 flex items-center justify-between">
+          <span>Navigation</span>
+          <span class="text-[9px] text-sky-400 font-normal">Box'em Showcase</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-center font-mono text-xs">
+          <a href="index.html" class="p-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 text-white font-black flex flex-col items-center justify-center gap-1 shadow-md col-span-2">
+            <span class="material-symbols-outlined text-lg">rocket_launch</span>
+            <span>Launch Master Engine</span>
+          </a>
+          <a href="#live-embed" class="glass-button p-2 rounded-xl flex flex-col items-center justify-center gap-1 text-sky-400">
+            <span class="material-symbols-outlined text-base">view_in_ar</span>
+            <span class="text-[10px]">Live 3D</span>
+          </a>
+          <a href="#scenarios" class="glass-button p-2 rounded-xl flex flex-col items-center justify-center gap-1 text-cyan-400">
+            <span class="material-symbols-outlined text-base">tune</span>
+            <span class="text-[10px]">Scenarios</span>
+          </a>
+          <a href="#how-to-seed" class="glass-button p-2 rounded-xl flex flex-col items-center justify-center gap-1 text-emerald-400">
+            <span class="material-symbols-outlined text-base">code</span>
+            <span class="text-[10px]">Seed Code</span>
+          </a>
+          <a href="#professions" class="glass-button p-2 rounded-xl flex flex-col items-center justify-center gap-1 text-indigo-400">
+            <span class="material-symbols-outlined text-base">local_library</span>
+            <span class="text-[10px]">225+ Matrix</span>
+          </a>
+          <a href="#backer-perks" class="glass-button p-2 rounded-xl flex flex-col items-center justify-center gap-1 text-amber-400 col-span-2">
+            <span class="material-symbols-outlined text-base">favorite</span>
+            <span class="text-[10px]">Backer Perks & Support</span>
+          </a>
+        </div>
       </div>
     </header>
 
@@ -669,11 +710,16 @@
       <div class="relative z-20 w-full max-w-[1840px] mx-auto flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 lg:px-12 my-auto pointer-events-none gap-8" id="embed-canvas-parent">
         
         <!-- LEFT FLANK: Interactive Constraint Sliders (w-full max-w-[300px]) -->
-        <div class="relative w-full max-w-[300px] space-y-3 pointer-events-auto shrink-0 showcase-ui-target">
+        <div id="showcase-left-flank" class="relative w-full max-w-[300px] space-y-3 pointer-events-auto shrink-0 showcase-ui-target transition-all duration-300">
           <div id="constraint-card-container" class="glass-panel p-4 rounded-3xl border shadow-xl space-y-3 w-full">
-            <div class="text-xs font-mono font-black uppercase text-slate-950 dark:text-white flex items-center gap-2 pb-1 border-b border-slate-950/10 dark:border-white/10">
-              <span class="material-symbols-outlined text-sm text-sky-500">tune</span>
-              <span>Constraint Parameters</span>
+            <div class="text-xs font-mono font-black uppercase text-slate-950 dark:text-white flex items-center justify-between pb-1 border-b border-slate-950/10 dark:border-white/10">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm text-sky-500">tune</span>
+                <span>Constraint Parameters</span>
+              </div>
+              <button id="btn-close-left-flank" class="p-1 rounded-lg hover:bg-slate-500/10 text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors" title="Minimize Parameters Card">
+                <span class="material-symbols-outlined text-xs">close</span>
+              </button>
             </div>
 
             <!-- Slider 1: Timeline -->
@@ -730,13 +776,18 @@
         </div>
 
         <!-- RIGHT FLANK: Solved Equilibrium & 1-Click Export Utility (w-full max-w-[300px]) -->
-        <div class="relative w-full max-w-[300px] space-y-3 pointer-events-auto shrink-0 showcase-ui-target">
+        <div id="showcase-right-flank" class="relative w-full max-w-[300px] space-y-3 pointer-events-auto shrink-0 showcase-ui-target transition-all duration-300">
           
           <!-- Card: Solved Equilibrium Budget -->
           <div class="glass-panel p-4 rounded-3xl border-2 border-emerald-500/40 shadow-2xl bg-emerald-500/10 dark:bg-emerald-950/30 space-y-1.5 w-full">
             <div class="flex items-center justify-between">
               <span class="text-[11px] font-mono font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-wider">Solved Equilibrium</span>
-              <span class="material-symbols-outlined text-xl text-emerald-500">lock</span>
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-lg text-emerald-500">lock</span>
+                <button id="btn-close-right-flank" class="p-1 rounded-lg hover:bg-slate-500/10 text-slate-400 hover:text-slate-950 dark:hover:text-white transition-colors" title="Minimize Solved & Export Card">
+                  <span class="material-symbols-outlined text-xs">close</span>
+                </button>
+              </div>
             </div>
             <div id="hero-solved-cost-val" class="text-2xl sm:text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400">
               $8,500 USD
@@ -785,10 +836,27 @@
 
       </div>
 
-      <!-- BOTTOM: Floating Bottom Instructions Pill (z-30) -->
-      <div class="relative z-30 mx-auto w-fit px-4 py-1.5 rounded-2xl glass-panel text-xs sm:text-sm font-mono font-bold text-slate-900 dark:text-white flex items-center gap-2 pointer-events-none shadow-xl border border-slate-950/10 dark:border-white/10 mt-2 showcase-ui-target">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span><strong>Drag Nodes</strong> in 3D • <strong>Hover Gems</strong> for Submodules • <strong>30s Idle Auto-Spin</strong></span>
+      <!-- BOTTOM: Showcase Interactive Control Dock (Easy Toggles for Parameters, Export & 100% Zen 3D Focus) -->
+      <div id="showcase-bottom-dock" class="relative z-30 mx-auto pointer-events-auto flex items-center gap-2 p-2 rounded-2xl glass-panel shadow-2xl max-w-[94vw] overflow-x-auto scrollbar-none whitespace-nowrap mt-3 showcase-ui-target">
+        <button id="dock-btn-params" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono font-black text-sky-600 dark:text-sky-400 active flex items-center gap-1.5 whitespace-nowrap shrink-0">
+          <span class="material-symbols-outlined text-base">tune</span>
+          <span>Parameters</span>
+        </button>
+        <button id="dock-btn-export" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono font-black text-emerald-600 dark:text-emerald-400 active flex items-center gap-1.5 whitespace-nowrap shrink-0">
+          <span class="material-symbols-outlined text-base">analytics</span>
+          <span>Solved & Export</span>
+        </button>
+        <div class="h-5 w-[1px] bg-slate-400/30 dark:bg-white/20 mx-1 shrink-0"></div>
+        <button id="dock-btn-zen" class="glass-button px-3 py-2 rounded-xl text-xs font-mono font-bold text-amber-500 flex items-center gap-1.5 whitespace-nowrap shrink-0" title="Toggle 100% Pure 3D Focus (Zen View)">
+          <span class="material-symbols-outlined text-base">auto_awesome</span>
+          <span>3D Focus</span>
+        </button>
+        <div class="h-5 w-[1px] bg-slate-400/30 dark:bg-white/20 mx-1 shrink-0"></div>
+        <div class="text-[11px] font-mono font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1.5 px-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="hidden sm:inline">Drag Nodes in 3D • Hover Gems for Submodules</span>
+          <span class="sm:hidden">Drag Nodes in 3D</span>
+        </div>
       </div>
 
     </section>
@@ -2647,6 +2715,83 @@
         showToast(isShowcaseMode ? '✨ Cinematic Showcase Mode Active • Pure 3D Zen' : 'Standard Workspace Restored');
       });
 
+      // Showcase Responsive Flank Collapsing & Bottom Dock Controls
+      const leftFlank = document.getElementById('showcase-left-flank');
+      const rightFlank = document.getElementById('showcase-right-flank');
+      const dockBtnParams = document.getElementById('dock-btn-params');
+      const dockBtnExport = document.getElementById('dock-btn-export');
+      const dockBtnZen = document.getElementById('dock-btn-zen');
+      const btnCloseLeft = document.getElementById('btn-close-left-flank');
+      const btnCloseRight = document.getElementById('btn-close-right-flank');
+
+      function toggleLeftFlank(forceState) {
+        if (!leftFlank) return;
+        const willShow = forceState !== undefined ? forceState : leftFlank.style.display === 'none';
+        leftFlank.style.display = willShow ? 'block' : 'none';
+        dockBtnParams?.classList.toggle('active', willShow);
+      }
+
+      function toggleRightFlank(forceState) {
+        if (!rightFlank) return;
+        const willShow = forceState !== undefined ? forceState : rightFlank.style.display === 'none';
+        rightFlank.style.display = willShow ? 'block' : 'none';
+        dockBtnExport?.classList.toggle('active', willShow);
+      }
+
+      dockBtnParams?.addEventListener('click', () => toggleLeftFlank());
+      dockBtnExport?.addEventListener('click', () => toggleRightFlank());
+      btnCloseLeft?.addEventListener('click', () => toggleLeftFlank(false));
+      btnCloseRight?.addEventListener('click', () => toggleRightFlank(false));
+
+      dockBtnZen?.addEventListener('click', () => {
+        const currentlyVisible = leftFlank?.style.display !== 'none' || rightFlank?.style.display !== 'none';
+        toggleLeftFlank(!currentlyVisible);
+        toggleRightFlank(!currentlyVisible);
+        dockBtnZen.classList.toggle('text-amber-400', currentlyVisible);
+        showToast(currentlyVisible ? '✨ Pure 3D Focus Active' : 'Controls Restored');
+      });
+
+      // Responsive Initial State: Collapse side cards on mobile/tablet for pure 3D view
+      function applyShowcaseResponsiveState() {
+        if (window.innerWidth < 1024) {
+          toggleLeftFlank(false);
+          toggleRightFlank(false);
+        } else {
+          toggleLeftFlank(true);
+          toggleRightFlank(true);
+        }
+      }
+      applyShowcaseResponsiveState();
+      window.addEventListener('resize', applyShowcaseResponsiveState);
+
+      // Mobile Nav Dropdown Listener
+      const btnNavMenu = document.getElementById('btn-showcase-nav-menu');
+      const navDropdown = document.getElementById('showcase-nav-dropdown');
+      const navChevron = document.getElementById('icon-showcase-menu-chevron');
+
+      if (btnNavMenu && navDropdown) {
+        btnNavMenu.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isClosed = navDropdown.classList.contains('hidden');
+          navDropdown.classList.toggle('hidden', !isClosed);
+          if (navChevron) navChevron.style.transform = isClosed ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+
+        navDropdown.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', () => {
+            navDropdown.classList.add('hidden');
+            if (navChevron) navChevron.style.transform = 'rotate(0deg)';
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!navDropdown.contains(e.target) && !btnNavMenu.contains(e.target)) {
+            navDropdown.classList.add('hidden');
+            if (navChevron) navChevron.style.transform = 'rotate(0deg)';
+          }
+        });
+      }
+
       // Zoom Controls & Reset View
       document.getElementById('hero-btn-zoom-in')?.addEventListener('click', () => {
         triggerInteractionPause();
@@ -2660,13 +2805,15 @@
         camera.position.clampLength(controls.minDistance, controls.maxDistance);
         updateAdaptiveBillboards();
       });
-      document.getElementById('hero-btn-reset-view')?.addEventListener('click', () => {
+      const resetCameraView = () => {
         triggerInteractionPause();
         camera.position.set(0, -0.20, 9.6);
         controls.target.set(0, -1.05, 0);
         updateAdaptiveBillboards();
         showToast('Reset 3D camera angle.');
-      });
+      };
+      document.getElementById('hero-btn-reset-view')?.addEventListener('click', resetCameraView);
+      document.getElementById('dock-btn-reset')?.addEventListener('click', resetCameraView);
 
       document.getElementById('hero-btn-copy-embed').addEventListener('click', () => {
         const embedInput = document.getElementById('hero-embed-input');
