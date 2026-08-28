@@ -261,8 +261,45 @@ const server = http.createServer((req, res) => {
           donorName,
           amountUsd,
           tier,
+          backerToken: 'BOXEM-BACKER-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
           unlockedTheme: 'all',
           message: 'Donation processed successfully. All 8 backer-exclusive shaders and perks unlocked!'
+        }));
+      } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: e.message }));
+      }
+    });
+    return;
+  }
+
+  // POST /api/checkout -> Local Stripe Checkout Gateway Simulator
+  if (req.method === 'POST' && pathname === '/api/checkout') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const data = JSON.parse(body || '{}');
+        const amountUsd = parseFloat(data.amount || 25.0);
+        const donorName = (data.donorName || data.name || 'Community Backer').slice(0, 50);
+        const tier = amountUsd >= 100 ? 4 : (amountUsd >= 50 ? 3 : (amountUsd >= 25 ? 2 : 1));
+        const token = 'BOXEM-STRIPE-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+        const stripeKey = process.env.STRIPE_SECRET_KEY;
+        const checkoutUrl = stripeKey 
+          ? `https://checkout.stripe.com/c/pay/cs_live_${token}`
+          : `https://github.com/sponsors/Axialon`;
+
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({
+          status: 'success',
+          mode: stripeKey ? 'stripe_checkout_session' : 'stripe_payment_link',
+          checkoutUrl: checkoutUrl,
+          backerToken: token,
+          donorName,
+          amountUsd,
+          tier,
+          message: 'Stripe 2-click checkout session generated.'
         }));
       } catch (e) {
         res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });

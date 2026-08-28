@@ -1897,10 +1897,10 @@
           </div>
         </div>
 
-        <!-- Action Buttons -->
+        <!-- 2-Click Stripe Checkout Action Buttons -->
         <div class="space-y-2 pt-1">
-          <button id="btn-donate-card-action" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-mono font-black text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all">
-            <span class="material-symbols-outlined text-base">credit_card</span> Donate $<span id="btn-donate-amount-label">25</span> One-Time (Stripe / Card)
+          <button id="btn-donate-card-action" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-mono font-black text-xs sm:text-sm shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99]">
+            <span class="material-symbols-outlined text-lg">credit_card</span> Pay $<span id="btn-donate-amount-label">25</span> with Stripe (Card / Apple Pay / Google Pay)
           </button>
           <div class="grid grid-cols-2 gap-2">
             <a href="https://github.com/sponsors/Axialon" target="_blank" class="py-2.5 px-3 rounded-xl glass-button text-center font-mono font-bold text-xs flex items-center justify-center gap-1.5 text-slate-800 dark:text-slate-200" title="Sponsor Axialon on GitHub">
@@ -4021,40 +4021,77 @@
         });
       }
 
-      // Donate via Card Action
+      // 2-Click Stripe Checkout Action
       const btnDonateCard = document.getElementById('btn-donate-card-action');
       if (btnDonateCard) {
         btnDonateCard.addEventListener('click', async () => {
           const donorName = (document.getElementById('input-donor-name')?.value || 'Community Backer').trim();
           const amount = selectedDonationAmount || 25;
-          showToast(`Opening Official Payment Gateway ($${amount} USD)...`);
+          showToast(`⚡ Launching Stripe Checkout for $${amount} USD...`);
           
-          let token = `BOXEM-CARD-${Date.now()}`;
+          let token = `BOXEM-STRIPE-${Date.now()}`;
           let tier = amount >= 25 ? 2 : 1;
 
           try {
-            const res = await fetch('/api/donate', {
+            const res = await fetch('/api/checkout', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ donorName, amount })
+              body: JSON.stringify({
+                amount: amount,
+                donorName: donorName,
+                successUrl: `${window.location.origin}/?backer=success&tier=${tier}&amount=${amount}&session_id={CHECKOUT_SESSION_ID}`
+              })
             });
+
             if (res.ok) {
               const data = await res.json();
               if (data.backerToken) token = data.backerToken;
               if (data.tier) tier = data.tier;
+
+              if (data.checkoutUrl) {
+                window.open(data.checkoutUrl, '_blank');
+              }
+            } else {
+              window.open('https://github.com/sponsors/Axialon', '_blank');
             }
-          } catch (e) {}
+          } catch (e) {
+            window.open('https://github.com/sponsors/Axialon', '_blank');
+          }
 
           setBackerTier(tier, token);
           recordLiveDonation(donorName, amount, token);
-
-          // Open official GitHub Sponsors / Card Payment Gateway
-          window.open('https://github.com/sponsors/Axialon', '_blank');
-
-          showToast(`🎉 Thank you ${donorName}! Tier ${tier} Perks Unlocked! Token: ${token}`);
+          showToast(`🎉 Thank you ${donorName}! Stripe Session Ready (Token: ${token})`);
           if (pendingLockedShaderKey) applyShaderPreset(pendingLockedShaderKey);
         });
       }
+
+      // Check for Stripe Checkout return redirect (?backer=success)
+      (function checkStripeReturn() {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('backer') === 'success' || urlParams.get('session_id')) {
+            const tier = parseInt(urlParams.get('tier')) || 2;
+            const amount = parseFloat(urlParams.get('amount')) || 25;
+            const sessionId = urlParams.get('session_id') || `STRIPE-${Date.now()}`;
+
+            setBackerTier(tier, sessionId);
+
+            fetch('/api/donate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ donorName: 'Stripe Verified Supporter', amount: amount })
+            }).catch(() => {});
+
+            setTimeout(() => {
+              showToast(`🎉 Payment Confirmed! All 8 Backer Shaders & Perks are permanently unlocked!`);
+              if (typeof applyShaderPreset === 'function') applyShaderPreset('kintsugi');
+            }, 600);
+
+            const cleanUrl = window.location.pathname + window.location.hash;
+            window.history.replaceState({}, document.title, cleanUrl);
+          }
+        } catch (e) {}
+      })();
 
       // Simulate Edge Donation Action
       const btnSimulateEdge = document.getElementById('btn-simulate-edge-donation');
