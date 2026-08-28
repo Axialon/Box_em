@@ -1859,15 +1859,15 @@
 
       <!-- Functional 1-Time Donation Interface -->
       <div class="space-y-3 p-4 rounded-2xl glass-card-sub border border-indigo-500/30">
-        <!-- Interactive 3D Model Hologram Preview -->
-        <div class="relative w-full h-36 rounded-xl overflow-hidden bg-slate-950/80 border border-indigo-500/40 flex items-center justify-center shadow-inner">
+        <!-- Interactive 3D Model Hologram Preview (2x Taller on Desktop, Responsive on Mobile) -->
+        <div class="relative w-full h-44 sm:h-64 md:h-72 rounded-2xl overflow-hidden bg-slate-950/80 border border-indigo-500/40 flex items-center justify-center shadow-inner group">
           <canvas id="donation-3d-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
-          <div class="absolute top-2.5 left-3 flex items-center gap-1.5 pointer-events-none">
+          <div class="absolute top-3 left-3.5 flex items-center gap-2 pointer-events-none bg-slate-900/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="donation-3d-label" class="text-[10px] font-mono font-black text-indigo-300 tracking-wider uppercase">Tier 2: Studio Craftsman 3D Core</span>
+            <span id="donation-3d-label" class="text-[10px] sm:text-xs font-mono font-black text-indigo-300 tracking-wider uppercase">Tier 2: Studio Craftsman 3D Core</span>
           </div>
-          <div class="absolute bottom-2 right-3 text-[9px] font-mono text-slate-400 pointer-events-none flex items-center gap-1">
-            <span class="material-symbols-outlined text-xs text-sky-400">3d_rotation</span> Drag to Inspect 3D Perk
+          <div class="absolute bottom-2.5 right-3.5 text-[9px] sm:text-[10px] font-mono text-slate-400 pointer-events-none flex items-center gap-1 bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
+            <span class="material-symbols-outlined text-xs sm:text-sm text-sky-400">3d_rotation</span> Drag to Inspect 3D Perk
           </div>
         </div>
 
@@ -1878,23 +1878,27 @@
           <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">Zero Subscriptions</span>
         </div>
 
-        <!-- Tier Selection Pills -->
-        <div class="grid grid-cols-4 gap-2 text-xs font-mono" id="donation-tier-selector">
-          <button type="button" class="donation-tier-btn p-2 rounded-xl glass-button text-center font-black transition-all text-slate-700 dark:text-slate-300" data-amount="5" data-tier="1">
+        <!-- 5-Tier Selection Pills -->
+        <div class="grid grid-cols-5 gap-1.5 sm:gap-2 text-xs font-mono" id="donation-tier-selector">
+          <button type="button" class="donation-tier-btn p-1.5 sm:p-2 rounded-xl glass-button text-center font-black transition-all text-slate-700 dark:text-slate-300" data-amount="5" data-tier="1">
             $5
-            <div class="text-[9px] font-normal text-slate-400">Coffee</div>
+            <div class="text-[8px] sm:text-[9px] font-normal text-slate-400">Coffee</div>
           </button>
-          <button type="button" class="donation-tier-btn p-2 rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/30 text-center font-black transition-all" data-amount="25" data-tier="2">
+          <button type="button" class="donation-tier-btn p-1.5 sm:p-2 rounded-xl bg-indigo-600 text-white shadow-md shadow-indigo-600/30 text-center font-black transition-all" data-amount="25" data-tier="2">
             $25
-            <div class="text-[9px] font-normal opacity-80">Studio</div>
+            <div class="text-[8px] sm:text-[9px] font-normal opacity-80">Studio</div>
           </button>
-          <button type="button" class="donation-tier-btn p-2 rounded-xl glass-button text-center font-black transition-all text-slate-700 dark:text-slate-300" data-amount="50" data-tier="3">
+          <button type="button" class="donation-tier-btn p-1.5 sm:p-2 rounded-xl glass-button text-center font-black transition-all text-slate-700 dark:text-slate-300" data-amount="50" data-tier="3">
             $50
-            <div class="text-[9px] font-normal text-slate-400">Agency</div>
+            <div class="text-[8px] sm:text-[9px] font-normal text-slate-400">Agency</div>
           </button>
-          <button type="button" class="donation-tier-btn p-2 rounded-xl glass-button text-center font-black transition-all text-slate-700 dark:text-slate-300" data-amount="100" data-tier="4">
+          <button type="button" class="donation-tier-btn p-1.5 sm:p-2 rounded-xl glass-button text-center font-black transition-all text-slate-700 dark:text-slate-300" data-amount="100" data-tier="4">
             $100
-            <div class="text-[9px] font-normal text-slate-400">Patron</div>
+            <div class="text-[8px] sm:text-[9px] font-normal text-slate-400">Patron</div>
+          </button>
+          <button type="button" class="donation-tier-btn p-1.5 sm:p-2 rounded-xl glass-button text-center font-black transition-all text-emerald-700 dark:text-emerald-300" data-amount="250" data-tier="5">
+            $250
+            <div class="text-[8px] sm:text-[9px] font-normal text-emerald-500">Eco</div>
           </button>
         </div>
 
@@ -4016,28 +4020,31 @@
 
         donation3dScene = new THREE.Scene();
         const width = canvas.clientWidth || 400;
-        const height = canvas.clientHeight || 150;
-        donation3dCamera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-        donation3dCamera.position.set(0, 0, 4.5);
+        const height = canvas.clientHeight || 260;
+        donation3dCamera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
+        donation3dCamera.position.set(0, 0, 4.8);
 
         donation3dRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
         donation3dRenderer.setSize(width, height);
         donation3dRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        const ambLight = new THREE.AmbientLight(0xffffff, 1.2);
+        const ambLight = new THREE.AmbientLight(0xffffff, 1.4);
         donation3dScene.add(ambLight);
-        const pointLight = new THREE.PointLight(0x38bdf8, 3, 10);
-        pointLight.position.set(2, 2, 3);
-        donation3dScene.add(pointLight);
+        const pointLight1 = new THREE.PointLight(0x38bdf8, 3.5, 12);
+        pointLight1.position.set(3, 3, 4);
+        donation3dScene.add(pointLight1);
+        const pointLight2 = new THREE.PointLight(0xc084fc, 2.5, 10);
+        pointLight2.position.set(-3, -2, 2);
+        donation3dScene.add(pointLight2);
 
         // Core Crystal Matrix
-        const coreGeo = new THREE.IcosahedronGeometry(1.0, 0);
+        const coreGeo = new THREE.IcosahedronGeometry(1.15, 0);
         const coreMat = new THREE.MeshPhysicalMaterial({
           color: 0xa855f7,
           emissive: 0x581c87,
-          emissiveIntensity: 0.4,
-          roughness: 0.15,
-          metalness: 0.3,
+          emissiveIntensity: 0.45,
+          roughness: 0.12,
+          metalness: 0.35,
           wireframe: false,
           flatShading: true
         });
@@ -4045,8 +4052,8 @@
         donation3dScene.add(donation3dCore);
 
         // Orbiting Satellite Particles
-        for (let i = 0; i < 3; i++) {
-          const satGeo = new THREE.OctahedronGeometry(0.2, 0);
+        for (let i = 0; i < 4; i++) {
+          const satGeo = new THREE.OctahedronGeometry(0.18, 0);
           const satMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8, wireframe: true });
           const satMesh = new THREE.Mesh(satGeo, satMat);
           donation3dScene.add(satMesh);
@@ -4067,6 +4074,38 @@
           prevY = e.clientY;
         });
 
+        // Touch Support for Mobile
+        canvas.addEventListener('touchstart', e => {
+          if (e.touches.length === 1) {
+            isDragging = true;
+            prevX = e.touches[0].clientX;
+            prevY = e.touches[0].clientY;
+          }
+        }, { passive: true });
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', e => {
+          if (!isDragging || !donation3dCore || e.touches.length !== 1) return;
+          const dx = e.touches[0].clientX - prevX;
+          const dy = e.touches[0].clientY - prevY;
+          donation3dCore.rotation.y += dx * 0.015;
+          donation3dCore.rotation.x += dy * 0.015;
+          prevX = e.touches[0].clientX;
+          prevY = e.touches[0].clientY;
+        }, { passive: true });
+
+        // Responsive Resize Listener
+        function resizeHologram() {
+          if (!canvas || !donation3dCamera || !donation3dRenderer) return;
+          const w = canvas.clientWidth;
+          const h = canvas.clientHeight;
+          if (w > 0 && h > 0) {
+            donation3dCamera.aspect = w / h;
+            donation3dCamera.updateProjectionMatrix();
+            donation3dRenderer.setSize(w, h);
+          }
+        }
+        window.addEventListener('resize', resizeHologram);
+
         // Animation Loop
         let angle = 0;
         function animateDonation3d() {
@@ -4075,19 +4114,19 @@
           if (modal && modal.classList.contains('hidden')) return;
 
           if (donation3dCore && !isDragging) {
-            donation3dCore.rotation.y += 0.012;
-            donation3dCore.rotation.x += 0.006;
+            donation3dCore.rotation.y += 0.014;
+            donation3dCore.rotation.x += 0.007;
           }
 
           angle += 0.025;
           donation3dSatellites.forEach((sat, i) => {
-            const offset = (i * Math.PI * 2) / 3;
+            const offset = (i * Math.PI * 2) / 4;
             sat.position.set(
-              Math.cos(angle + offset) * 1.8,
-              Math.sin(angle * 1.5 + offset) * 0.6,
-              Math.sin(angle + offset) * 1.8
+              Math.cos(angle + offset) * 2.1,
+              Math.sin(angle * 1.5 + offset) * 0.75,
+              Math.sin(angle + offset) * 2.1
             );
-            sat.rotation.y += 0.03;
+            sat.rotation.y += 0.035;
           });
 
           donation3dRenderer.render(donation3dScene, donation3dCamera);
@@ -4098,7 +4137,7 @@
       function updateHologramTier(amount) {
         const label = document.getElementById('donation-3d-label');
         if (!donation3dCore) return;
-        const tier = amount >= 100 ? 4 : (amount >= 50 ? 3 : (amount >= 25 ? 2 : 1));
+        const tier = amount >= 250 ? 5 : (amount >= 100 ? 4 : (amount >= 50 ? 3 : (amount >= 25 ? 2 : 1)));
         if (tier === 1) {
           donation3dCore.material.color.setHex(0xf59e0b);
           donation3dCore.material.emissive.setHex(0x78350f);
@@ -4111,10 +4150,14 @@
           donation3dCore.material.color.setHex(0x38bdf8);
           donation3dCore.material.emissive.setHex(0x0369a1);
           if (label) label.textContent = 'Tier 3: Agency Powerhouse Matrix';
-        } else {
-          donation3dCore.material.color.setHex(0xe2e8f0);
-          donation3dCore.material.emissive.setHex(0x4338ca);
+        } else if (tier === 4) {
+          donation3dCore.material.color.setHex(0x6366f1);
+          donation3dCore.material.emissive.setHex(0x312e81);
           if (label) label.textContent = 'Tier 4: Enterprise Patron Obsidian Core';
+        } else {
+          donation3dCore.material.color.setHex(0x10b981);
+          donation3dCore.material.emissive.setHex(0x047857);
+          if (label) label.textContent = 'Tier 5: Ecosystem Backer Vision Pro Core';
         }
       }
 

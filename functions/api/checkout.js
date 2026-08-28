@@ -11,8 +11,8 @@ export async function onRequestPost(context) {
     const data = await context.request.json().catch(() => ({}));
     const amount = parseFloat(data.amount || 25.0);
     const donorName = (data.donorName || data.name || 'Community Backer').slice(0, 60);
-    const tier = amount >= 100 ? 4 : (amount >= 50 ? 3 : (amount >= 25 ? 2 : 1));
-    const tierNames = { 1: 'Coffee & Shaders', 2: 'Studio Craftsman', 3: 'Agency Powerhouse', 4: 'Enterprise Patron' };
+    const tier = amount >= 250 ? 5 : (amount >= 100 ? 4 : (amount >= 50 ? 3 : (amount >= 25 ? 2 : 1)));
+    const tierNames = { 1: 'Coffee & Shaders', 2: 'Studio Craftsman', 3: 'Agency Powerhouse', 4: 'Enterprise Patron', 5: 'Ecosystem Backer' };
     const tierLabel = tierNames[tier] || 'Custom Backer';
 
     const origin = new URL(context.request.url).origin;
@@ -28,7 +28,8 @@ export async function onRequestPost(context) {
         1: `${origin}/assets/images/tier_1_coffee_shaders.png`,
         2: `${origin}/assets/images/tier_2_studio_craftsman.png`,
         3: `${origin}/assets/images/tier_3_agency_powerhouse.png`,
-        4: `${origin}/assets/images/tier_4_enterprise_patron.png`
+        4: `${origin}/assets/images/tier_4_enterprise_patron.png`,
+        5: `${origin}/assets/images/tier_5_ecosystem_backer.png`
       };
       const tierImage = tierImageMap[tier] || `${origin}/assets/images/tier_2_studio_craftsman.png`;
 
