@@ -11,6 +11,22 @@ const url = require('url');
 
 const PORT = process.env.PORT || 8080;
 
+// Load local .env if present
+try {
+  const envPath = path.join(__dirname, '.env');
+  if (fs.existsSync(envPath)) {
+    const envLines = fs.readFileSync(envPath, 'utf8').split('\n');
+    envLines.forEach(line => {
+      const match = line.trim().match(/^([^=]+)=(.*)$/);
+      if (match && !match[1].startsWith('#')) {
+        const k = match[1].trim();
+        const v = match[2].trim().replace(/^["']|["']$/g, '');
+        if (k && !process.env[k]) process.env[k] = v;
+      }
+    });
+  }
+} catch (e) {}
+
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
