@@ -782,45 +782,65 @@
     </div>
   </div>
 
-  <!-- Top-Right Action Pill Bar (Collapsible with Dedicated Toggle Icon to Balance with Top-Left) -->
-  <div id="top-right-bar-container" class="absolute top-3.5 right-4 z-50 pointer-events-auto flex items-center gap-1.5 transition-all duration-300">
-    <div id="top-right-pill-bar" class="glass-panel px-3 py-2 rounded-2xl flex items-center gap-2 shadow-lg overflow-x-auto max-w-full scrollbar-none whitespace-nowrap transition-all duration-300 origin-right">
-      <a href="showcase.html" class="glass-button px-4 py-2.5 rounded-xl flex items-center gap-2 text-amber-700 dark:text-amber-300 font-mono text-sm shadow-md flex-shrink-0 hover:border-amber-500 transition-all" title="View 3D Scenario Showcase & Embeds">
-        <span class="material-symbols-outlined text-base">stars</span>
-        <span class="font-black">Showcase</span>
-      </a>
-      <button id="btn-open-library" class="glass-button px-4 py-2.5 rounded-xl flex items-center gap-2 text-indigo-700 dark:text-indigo-400 font-mono text-sm shadow-md flex-shrink-0" title="225+ Matrix Library & Saved Models">
-        <span class="material-symbols-outlined text-lg">local_library</span>
-        <span class="font-black">📚 Model Library</span>
-      </button>
-      <button id="btn-share-model" class="glass-button px-4 py-2.5 rounded-xl flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm shadow-md flex-shrink-0" title="Share Configured 3D Object & AI Protocol">
-        <span class="material-symbols-outlined text-lg">share</span>
-        <span class="font-black">Share 3D</span>
-      </button>
-      <button id="btn-open-ticker" class="glass-button p-2.5 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400 flex-shrink-0" title="Live Sponsor Ticker & Perks">
-        <span class="material-symbols-outlined text-lg">volunteer_activism</span>
-      </button>
-      <button id="btn-open-export" class="glass-button p-2.5 rounded-xl flex items-center justify-center text-indigo-700 dark:text-indigo-400 flex-shrink-0" title="Export Suite: .boxem.json | .glb | Embed">
-        <span class="material-symbols-outlined text-lg">file_download</span>
-      </button>
-      <button id="btn-open-scenarios" class="glass-button p-2.5 rounded-xl flex items-center justify-center flex-shrink-0" title="Preset Negotiation Scenarios">
-        <span class="material-symbols-outlined text-lg text-slate-950 dark:text-white">tune</span>
-      </button>
-      <button id="btn-open-config" class="glass-button p-2.5 rounded-xl flex items-center justify-center flex-shrink-0" title="Unified Scaling & Display Settings">
-        <span class="material-symbols-outlined text-lg text-slate-950 dark:text-white">settings</span>
-      </button>
-      <button id="btn-open-bazaar" class="glass-button p-2.5 rounded-xl flex items-center justify-center flex-shrink-0" title="Obsidian Shaders & 3D Node Mesh Selector">
-        <span class="material-symbols-outlined text-lg text-slate-950 dark:text-white">palette</span>
-      </button>
-      <button id="btn-toggle-dark" class="glass-button p-2.5 rounded-xl flex items-center justify-center flex-shrink-0" title="Toggle Light / Dark Mode">
-        <span class="material-symbols-outlined text-lg text-slate-950 dark:text-white">dark_mode</span>
-      </button>
-    </div>
-
-    <!-- Dedicated Top-Right Collapse / Expand Toggle Button -->
-    <button id="btn-toggle-top-right-bar" class="glass-panel p-2.5 rounded-2xl flex items-center justify-center shadow-lg text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all flex-shrink-0 cursor-pointer" title="Collapse / Expand Action Bar">
-      <span class="material-symbols-outlined text-xl transition-transform duration-300" id="icon-toggle-top-right">menu_open</span>
+  <!-- Top-Right Action Menu (Compact Dropdown with Multiple Rows of Icons) -->
+  <div id="top-right-bar-container" class="absolute top-3.5 right-4 z-50 pointer-events-auto flex flex-col items-end">
+    <!-- Compact Menu Trigger Button -->
+    <button id="btn-top-menu-trigger" class="glass-panel px-3.5 py-2 rounded-2xl flex items-center gap-2 shadow-lg text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 border border-sky-500/30 transition-all cursor-pointer group active:scale-95" title="Open Quick Actions Menu">
+      <span class="material-symbols-outlined text-lg text-sky-400 group-hover:rotate-45 transition-transform duration-300">grid_view</span>
+      <span class="font-mono text-xs font-black tracking-wide hidden sm:inline">Actions</span>
+      <span class="material-symbols-outlined text-sm text-slate-400 transition-transform duration-200" id="icon-top-menu-chevron">expand_more</span>
     </button>
+
+    <!-- Multi-Row Compact Options Dropdown Popover -->
+    <div id="top-menu-dropdown" class="hidden absolute top-12 right-0 w-72 sm:w-80 glass-panel p-3 rounded-2xl shadow-2xl border border-indigo-500/40 backdrop-blur-2xl transition-all duration-200 origin-top-right z-50">
+      <div class="text-[10px] font-mono font-black uppercase text-slate-400 tracking-wider mb-2 px-1 flex items-center justify-between">
+        <span>Quick Actions</span>
+        <span class="text-[9px] text-indigo-400 font-normal">Box'em Engine</span>
+      </div>
+      <div class="grid grid-cols-3 gap-2 text-center font-mono">
+        <!-- Row 1: Primary Navigation -->
+        <a href="showcase.html" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-amber-600 dark:text-amber-400 hover:border-amber-500 transition-all group" title="View 3D Scenario Showcase">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">stars</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Showcase</span>
+        </a>
+        <button id="btn-open-library" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-indigo-600 dark:text-indigo-400 hover:border-indigo-500 transition-all group" title="225+ Matrix Library">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">local_library</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">225+ Matrix</span>
+        </button>
+        <button id="btn-share-model" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-sky-500 hover:border-sky-500 transition-all group" title="Share Configured 3D Object & AI Protocol">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">share</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Share 3D</span>
+        </button>
+
+        <!-- Row 2: Tools & Export -->
+        <button id="btn-open-ticker" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-pink-500 hover:border-pink-500 transition-all group" title="Live Sponsor Ticker & Perks">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">volunteer_activism</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Sponsors</span>
+        </button>
+        <button id="btn-open-export" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-emerald-500 hover:border-emerald-500 transition-all group" title="Export Suite: .boxem.json | .glb | Embed">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">file_download</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Export</span>
+        </button>
+        <button id="btn-open-scenarios" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-cyan-500 hover:border-cyan-500 transition-all group" title="Preset Negotiation Scenarios">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">tune</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Presets</span>
+        </button>
+
+        <!-- Row 3: Customization & System -->
+        <button id="btn-open-bazaar" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-purple-500 hover:border-purple-500 transition-all group" title="Obsidian Shaders & 3D Node Mesh Selector">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">palette</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Shaders</span>
+        </button>
+        <button id="btn-open-config" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-slate-400 hover:border-slate-300 transition-all group" title="Unified Scaling & Display Settings">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">settings</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Settings</span>
+        </button>
+        <button id="btn-toggle-dark" class="glass-button p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 text-amber-400 hover:border-amber-300 transition-all group" title="Toggle Light / Dark Mode">
+          <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">dark_mode</span>
+          <span class="text-[10px] font-black text-slate-900 dark:text-white">Theme</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Floating 3D Spatial Node Tags (Screen HUD fallback) -->
@@ -4425,27 +4445,67 @@
         });
       });
 
-      // Top-Right Action Pill Bar Collapse / Expand Toggle
-      const btnToggleTopRight = document.getElementById('btn-toggle-top-right-bar');
-      const pillBar = document.getElementById('top-right-pill-bar');
-      const iconToggleTopRight = document.getElementById('icon-toggle-top-right');
-      let isTopRightCollapsed = false;
+      // Top-Right Action Menu Dropdown Toggle
+      const btnTopMenuTrigger = document.getElementById('btn-top-menu-trigger');
+      const topMenuDropdown = document.getElementById('top-menu-dropdown');
+      const iconTopMenuChevron = document.getElementById('icon-top-menu-chevron');
 
-      if (btnToggleTopRight && pillBar) {
-        btnToggleTopRight.addEventListener('click', (e) => {
+      if (btnTopMenuTrigger && topMenuDropdown) {
+        btnTopMenuTrigger.addEventListener('click', (e) => {
           e.stopPropagation();
-          isTopRightCollapsed = !isTopRightCollapsed;
-          if (isTopRightCollapsed) {
-            pillBar.style.display = 'none';
-            if (iconToggleTopRight) iconToggleTopRight.textContent = 'menu';
-            btnToggleTopRight.classList.add('active');
+          const isClosed = topMenuDropdown.classList.contains('hidden');
+          if (isClosed) {
+            topMenuDropdown.classList.remove('hidden');
+            if (iconTopMenuChevron) iconTopMenuChevron.style.transform = 'rotate(180deg)';
           } else {
-            pillBar.style.display = 'flex';
-            if (iconToggleTopRight) iconToggleTopRight.textContent = 'menu_open';
-            btnToggleTopRight.classList.remove('active');
+            topMenuDropdown.classList.add('hidden');
+            if (iconTopMenuChevron) iconTopMenuChevron.style.transform = 'rotate(0deg)';
+          }
+        });
+
+        // Close dropdown when clicking any option button inside
+        topMenuDropdown.querySelectorAll('button, a').forEach(el => {
+          el.addEventListener('click', () => {
+            topMenuDropdown.classList.add('hidden');
+            if (iconTopMenuChevron) iconTopMenuChevron.style.transform = 'rotate(0deg)';
+          });
+        });
+
+        // Click outside closes dropdown
+        document.addEventListener('click', (e) => {
+          if (!topMenuDropdown.contains(e.target) && !btnTopMenuTrigger.contains(e.target)) {
+            topMenuDropdown.classList.add('hidden');
+            if (iconTopMenuChevron) iconTopMenuChevron.style.transform = 'rotate(0deg)';
           }
         });
       }
+
+      // Small Screen & Mobile Optimization: Default to Collapsed Windows with 3D Canvas in Focus
+      function applyResponsiveWindowState() {
+        if (window.innerWidth < 1024) {
+          const winCtrl = document.getElementById('win-controls');
+          const winCopilot = document.getElementById('win-copilot');
+          const winGauges = document.getElementById('win-gauges');
+          if (winCtrl) winCtrl.style.display = 'none';
+          if (winCopilot) winCopilot.style.display = 'none';
+          if (winGauges) winGauges.style.display = 'none';
+
+          const btnCtrl = document.getElementById('toggle-win-controls');
+          const btnCopilot = document.getElementById('toggle-win-copilot');
+          const btnGauges = document.getElementById('toggle-win-gauges');
+          if (btnCtrl) btnCtrl.classList.remove('active');
+          if (btnCopilot) btnCopilot.classList.remove('active');
+          if (btnGauges) btnGauges.classList.remove('active');
+        }
+      }
+      applyResponsiveWindowState();
+      window.addEventListener('resize', () => {
+        if (window.camera && window.renderer) {
+          window.camera.aspect = window.innerWidth / window.innerHeight;
+          window.camera.updateProjectionMatrix();
+          window.renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+      });
 
       document.getElementById('btn-toggle-dark').addEventListener('click', () => {
         state.isDarkMode = !state.isDarkMode;
