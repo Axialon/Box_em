@@ -1154,54 +1154,52 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-950/10 dark:border-white/10 py-12 px-4 sm:px-8 lg:px-12 max-w-[1920px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 font-mono text-xs text-slate-600 dark:text-slate-400">
-      <div class="flex items-center gap-3">
-        <div class="w-7 h-7 flex-shrink-0 flex items-center justify-center">
-          <svg viewBox="0 0 40 40" class="w-full h-full" shape-rendering="geometricPrecision">
+    <footer class="border-t border-slate-950/10 dark:border-white/10 py-12 px-4 sm:px-8 lg:px-12 max-w-[1920px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 f        <div class="w-7 h-7 flex-shrink-0 flex items-center justify-center">
+          <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="ftrObsTopBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#1e293b" />
-                <stop offset="60%" stop-color="#0f172a" />
-                <stop offset="100%" stop-color="#020617" />
+              <linearGradient id="ftrLogoTopGrad" x1="50" y1="4" x2="50" y2="48" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#0284c7" stop-opacity="0.80"/>
               </linearGradient>
-              <linearGradient id="ftrObsLeftBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#090d16" />
-                <stop offset="60%" stop-color="#030712" />
-                <stop offset="100%" stop-color="#000000" />
+              <linearGradient id="ftrLogoLeftGrad" x1="10" y1="26" x2="50" y2="92" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#0369a1" stop-opacity="0.95"/>
               </linearGradient>
-              <linearGradient id="ftrObsRightBase" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#111827" />
-                <stop offset="60%" stop-color="#070c18" />
-                <stop offset="100%" stop-color="#020617" />
+              <linearGradient id="ftrLogoRightGrad" x1="90" y1="26" x2="50" y2="92" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#0369a1" stop-opacity="0.90"/>
+                <stop offset="100%" stop-color="#075985" stop-opacity="0.98"/>
               </linearGradient>
-              <linearGradient id="ftrShimmerTop" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
-                <stop offset="42%" stop-color="#38bdf8" stop-opacity="0.6" />
-                <stop offset="50%" stop-color="#ffffff" stop-opacity="0.95" />
-                <stop offset="58%" stop-color="#38bdf8" stop-opacity="0.6" />
-                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
-              </linearGradient>
-              <linearGradient id="ftrShimmerLeft" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#34d399" stop-opacity="0" />
-                <stop offset="42%" stop-color="#34d399" stop-opacity="0.55" />
-                <stop offset="50%" stop-color="#ffffff" stop-opacity="0.95" />
-                <stop offset="58%" stop-color="#34d399" stop-opacity="0.55" />
-                <stop offset="100%" stop-color="#34d399" stop-opacity="0" />
-              </linearGradient>
-              <linearGradient id="ftrShimmerRight" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#c084fc" stop-opacity="0" />
-                <stop offset="42%" stop-color="#c084fc" stop-opacity="0.55" />
-                <stop offset="50%" stop-color="#ffffff" stop-opacity="0.95" />
-                <stop offset="58%" stop-color="#fbbf24" stop-opacity="0.55" />
-                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0" />
-              </linearGradient>
+              <filter id="ftrLogoGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="3.2" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <clipPath id="ftrLogoClipTop">
+                <polygon points="50,4 90,26 50,48 10,26"/>
+              </clipPath>
+              <clipPath id="ftrLogoClipSide">
+                <polygon points="10,26 50,48 90,26 90,70 50,92 10,70"/>
+              </clipPath>
             </defs>
-            <path d="M 20 4 L 35 12 L 21 19 L 6 12 Z" fill="url(#ftrObsTopBase)" stroke="rgba(255,255,255,0.30)" stroke-width="0.75" />
-            <path d="M 5 14 L 19 21 L 19 36 L 5 29 Z" fill="url(#ftrObsLeftBase)" stroke="rgba(255,255,255,0.20)" stroke-width="0.75" />
-            <path d="M 22 21 L 36 14 L 36 29 L 22 36 Z" fill="url(#ftrObsRightBase)" stroke="rgba(255,255,255,0.25)" stroke-width="0.75" />
-            <path class="obsidian-shimmer-top" d="M 20 4 L 35 12 L 21 19 L 6 12 Z" fill="url(#ftrShimmerTop)" pointer-events="none" />
-            <path class="obsidian-shimmer-left" d="M 5 14 L 19 21 L 19 36 L 5 29 Z" fill="url(#ftrShimmerLeft)" pointer-events="none" />
-            <path class="obsidian-shimmer-right" d="M 22 21 L 36 14 L 36 29 L 22 36 Z" fill="url(#ftrShimmerRight)" pointer-events="none" />
+            <polygon points="50,4 90,26 50,48 10,26" fill="url(#ftrLogoTopGrad)" stroke="#38bdf8" stroke-width="1.6" stroke-linejoin="miter"/>
+            <polygon points="10,26 50,48 50,92 10,70" fill="url(#ftrLogoLeftGrad)" stroke="#0284c7" stroke-width="1.6" stroke-linejoin="miter"/>
+            <polygon points="50,48 90,26 90,70 50,92" fill="url(#ftrLogoRightGrad)" stroke="#0369a1" stroke-width="1.6" stroke-linejoin="miter"/>
+            <path d="M 10,26 L 50,48 L 90,26 M 50,48 L 50,92" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.4" stroke-linejoin="miter" stroke-linecap="butt"/>
+            <line x1="50" y1="4" x2="90" y2="26" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" stroke-linecap="butt"/>
+            <g clip-path="url(#ftrLogoClipTop)">
+              <g class="scan-beam-top">
+                <line x1="0" y1="26" x2="100" y2="26" stroke="#38bdf8" stroke-width="7.0" filter="url(#ftrLogoGlow)" opacity="0.85"/>
+                <line x1="0" y1="26" x2="100" y2="26" stroke="#ffffff" stroke-width="2.2" stroke-linecap="butt"/>
+              </g>
+            </g>
+            <g clip-path="url(#ftrLogoClipSide)">
+              <g class="scan-beam-chevron">
+                <path d="M 6,26 L 50,48 L 94,26" stroke="#38bdf8" stroke-width="8.0" fill="none" stroke-linejoin="miter" stroke-linecap="butt" filter="url(#ftrLogoGlow)" opacity="0.90"/>
+                <path d="M 6,26 L 50,48 L 94,26" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linejoin="miter" stroke-linecap="butt"/>
+              </g>
+            </g>
           </svg>
         </div>
         <span class="font-bold text-slate-950 dark:text-white">Blackboxes • Box'em</span>
@@ -2937,6 +2935,10 @@
           }
         } catch (e) {}
         localStorage.setItem('boxem_backer_status', JSON.stringify({ tier: parseInt(tier), backerToken: token, unlocked: true, timestamp: Date.now() }));
+        
+        // Open Official Payment Gateway
+        window.open('https://github.com/sponsors/Axialon', '_blank');
+
         showToast(`🎉 Thank you! $${amount} Backing Verified! Token: ${token}`);
       });
     });

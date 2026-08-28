@@ -4027,7 +4027,7 @@
         btnDonateCard.addEventListener('click', async () => {
           const donorName = (document.getElementById('input-donor-name')?.value || 'Community Backer').trim();
           const amount = selectedDonationAmount || 25;
-          showToast(`Processing one-time contribution of $${amount} USD...`);
+          showToast(`Opening Official Payment Gateway ($${amount} USD)...`);
           
           let token = `BOXEM-CARD-${Date.now()}`;
           let tier = amount >= 25 ? 2 : 1;
@@ -4047,6 +4047,10 @@
 
           setBackerTier(tier, token);
           recordLiveDonation(donorName, amount, token);
+
+          // Open official GitHub Sponsors / Card Payment Gateway
+          window.open('https://github.com/sponsors/Axialon', '_blank');
+
           showToast(`🎉 Thank you ${donorName}! Tier ${tier} Perks Unlocked! Token: ${token}`);
           if (pendingLockedShaderKey) applyShaderPreset(pendingLockedShaderKey);
         });
