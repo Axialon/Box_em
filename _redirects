@@ -1,9 +1,8 @@
 # Cloudflare Pages Clean Route Rewrites
-/showcase       /showcase.html        200
-/explore        /showcase.html        200
-/overview       /showcase.html        200
-/about          /showcase.html        200
-/marketing      /showcase.html        301
+/explore        /showcase        301
+/overview       /showcase        301
+/about          /showcase        301
+/marketing      /showcase        301
 
 /schema/boxem.schema.json   /schemas/v1.schema.json   200
 /schema                     /schemas/v1.schema.json   200
