@@ -69,9 +69,10 @@ const workerHandler = {
             status: 'ok',
             totalUsd: 55.0,
             targetUsd: 2500,
-            backerCount: 1,
+            backerCount: 2,
             recent: [
-              { donorName: 'Founding Backer', amountUsd: 55.0, tier: 3, unlockedTheme: 'all', timestamp: new Date().toISOString() }
+              { donorName: 'Founding Backer', amountUsd: 50.0, tier: 3, unlockedTheme: 'all', timestamp: new Date(Date.now() - 3600000).toISOString() },
+              { donorName: 'Community Supporter', amountUsd: 5.0, tier: 1, unlockedTheme: 'kintsugi', timestamp: new Date().toISOString() }
             ]
           }), { status: 200, headers: corsHeaders });
         }

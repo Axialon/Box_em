@@ -40,16 +40,17 @@ export async function onRequestGet(context) {
     console.error('D1 query error:', err);
   }
 
-  // Baseline real data: $55.00 USD (1 Backer)
+  // Baseline real data: $55.00 USD (2 Backers: $50 + $5)
   const defaultSupporters = [
-    { donorName: 'Founding Backer', amountUsd: 55.0, tier: 3, unlockedTheme: 'all', timestamp: new Date().toISOString() }
+    { donorName: 'Founding Backer', amountUsd: 50.0, tier: 3, unlockedTheme: 'all', timestamp: new Date(Date.now() - 3600000).toISOString() },
+    { donorName: 'Community Supporter', amountUsd: 5.0, tier: 1, unlockedTheme: 'kintsugi', timestamp: new Date().toISOString() }
   ];
 
   return new Response(JSON.stringify({
     status: 'ok',
     totalUsd: 55.0,
     targetUsd: 2500,
-    backerCount: 1,
+    backerCount: 2,
     recent: defaultSupporters
   }), {
     status: 200,
