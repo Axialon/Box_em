@@ -1735,20 +1735,16 @@
       centralReactorMesh.renderOrder = 10;
       systemGroup.add(centralReactorMesh);
 
-      // High-Fidelity Anti-Aliased Grey Struts (Smooth physical cylindrical rods)
+      // Subtle Sleek Grey Cylindrical Struts (Clean, thin, elegant framing)
       const envelopeGroup = new THREE.Group();
       envelopeGroup.renderOrder = 1;
       systemGroup.add(envelopeGroup);
 
-      const strutGeo = new THREE.CylinderGeometry(0.015, 0.015, 1, 24);
-      const strutMat = new THREE.MeshPhysicalMaterial({
+      const strutGeo = new THREE.CylinderGeometry(0.0055, 0.0055, 1, 16);
+      const strutMat = new THREE.MeshBasicMaterial({
         color: 0x64748b,
-        roughness: 0.28,
-        metalness: 0.35,
-        clearcoat: 0.80,
-        clearcoatRoughness: 0.10,
         transparent: true,
-        opacity: 0.60,
+        opacity: 0.35,
         depthWrite: false,
         depthTest: true
       });
