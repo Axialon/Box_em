@@ -372,6 +372,20 @@
       flex-direction: column;
     }
 
+    @media (max-width: 768px) {
+      .floating-window {
+        left: 0.75rem !important;
+        right: 0.75rem !important;
+        width: calc(100vw - 1.5rem) !important;
+        max-width: calc(100vw - 1.5rem) !important;
+        min-width: 0 !important;
+        top: 6.5rem !important;
+        max-height: calc(100dvh - 12.5rem) !important;
+        bottom: auto !important;
+        padding: 1rem 1rem 1.5rem 1rem !important;
+      }
+    }
+
     .floating-window.collapsed {
       height: 56px !important;
       min-height: 56px !important;
@@ -406,6 +420,7 @@
     .window-body {
       overflow-y: auto;
       flex: 1 1 auto;
+      padding-bottom: 0.75rem;
     }
 
     .window-resizer {
@@ -460,19 +475,44 @@
       font-weight: 900;
     }
 
-    /* Modal Overlay - Always on Top */
+    /* Modal Overlay - Always on Top with Padded Safe Areas */
     .app-modal-overlay {
       position: fixed;
       inset: 0;
       z-index: 99999 !important;
-      background-color: rgba(2, 6, 23, 0.78);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background-color: rgba(2, 6, 23, 0.80);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
+      padding: 1.5rem 1rem;
+      padding-top: max(1.75rem, env(safe-area-inset-top, 1.75rem));
+      padding-bottom: max(2rem, env(safe-area-inset-bottom, 2rem));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       pointer-events: auto !important;
+    }
+
+    .app-modal-overlay > .glass-panel {
+      max-height: min(84vh, calc(100dvh - 4rem)) !important;
+      margin-top: auto;
+      margin-bottom: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 640px) {
+      .app-modal-overlay {
+        padding: 1.25rem 0.75rem;
+        padding-top: max(1.5rem, env(safe-area-inset-top, 1.5rem));
+        padding-bottom: max(1.75rem, env(safe-area-inset-bottom, 1.75rem));
+      }
+      .app-modal-overlay > .glass-panel {
+        max-height: calc(100dvh - 3.25rem) !important;
+        padding: 1.15rem 1rem 1.75rem 1rem !important;
+        border-radius: 1.5rem !important;
+      }
     }
 
     .app-modal-overlay.hidden {
@@ -1213,12 +1253,12 @@
       <!-- Library Controls: Tabs, Search, Category Filters, Save Active -->
       <div class="space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-3">
-          <div class="flex items-center gap-1.5 bg-slate-200 dark:bg-slate-800 p-1.5 rounded-2xl">
-            <button id="tab-btn-professions" class="px-4 py-2 rounded-xl text-xs font-mono font-black glass-button active flex items-center gap-1.5">
+          <div class="flex items-center gap-1 bg-slate-200 dark:bg-slate-800 p-1 rounded-2xl">
+            <button id="tab-btn-professions" class="px-3 py-1.5 rounded-xl text-xs font-mono font-black glass-button active flex items-center gap-1 whitespace-nowrap">
               <span class="material-symbols-outlined text-base">domain</span> 225 Professions (<span id="prof-count-badge">225</span>)
             </button>
-            <button id="tab-btn-saved" class="px-4 py-2 rounded-xl text-xs font-mono font-black glass-button flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-base">folder_special</span> My Saved Models (<span id="saved-count-badge">0</span>)
+            <button id="tab-btn-saved" class="px-3 py-1.5 rounded-xl text-xs font-mono font-black glass-button flex items-center gap-1 whitespace-nowrap">
+              <span class="material-symbols-outlined text-base">folder_special</span> Saved (<span id="saved-count-badge">0</span>)
             </button>
           </div>
 
