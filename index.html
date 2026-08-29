@@ -4878,7 +4878,6 @@ ${activeItems.map((m, i) => `${i + 1}. **${m.name}** (Req. Polish: ${m.reqQualit
         badge.addEventListener('click', () => {
           badge.classList.add('is-scanning');
           setTimeout(() => badge.classList.remove('is-scanning'), 1800);
-          showToast('⚡ 3D Obsidian Laser Scan Activated!');
         });
       }
     })();
