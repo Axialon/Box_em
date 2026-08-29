@@ -2666,33 +2666,6 @@
       struts.push(strutMesh);
     }
 
-    // High-Definition Luminous Edge Framework for the 3D Volume Graph
-    const volumeGroup = new THREE.Group();
-    volumeGroup.renderOrder = 11;
-    systemGroup.add(volumeGroup);
-
-    const volumeEdgeGeo = new THREE.CylinderGeometry(0.010, 0.010, 1, 24);
-    const volumeEdgeMat = new THREE.MeshPhysicalMaterial({
-      color: 0x38bdf8,
-      emissive: 0x0284c7,
-      emissiveIntensity: 0.50,
-      roughness: 0.15,
-      metalness: 0.25,
-      transmission: 0.20,
-      transparent: true,
-      opacity: 0.80,
-      depthWrite: false,
-      depthTest: true
-    });
-
-    const volumeStruts = [];
-    for (let i = 0; i < 6; i++) {
-      const vMesh = new THREE.Mesh(volumeEdgeGeo, volumeEdgeMat);
-      vMesh.renderOrder = 11;
-      volumeGroup.add(vMesh);
-      volumeStruts.push(vMesh);
-    }
-
     const innerModulesGroup = new THREE.Group();
     innerModulesGroup.renderOrder = 2;
     systemGroup.add(innerModulesGroup);
@@ -2819,6 +2792,20 @@
       group.add(mesh);
       group.userData.mesh = mesh;
       group.userData.proceduralMesh = mesh;
+
+      // 1b. Crisp Faint Crystalline Edge Lines (Structural definition on Node Objects)
+      const edgeGeo = new THREE.EdgesGeometry(defaultNodeCrystalGeo);
+      const edgeMat = new THREE.LineBasicMaterial({
+        color: colorHex,
+        transparent: true,
+        opacity: 0.35,
+        depthWrite: false,
+        depthTest: true
+      });
+      const edgeLines = new THREE.LineSegments(edgeGeo, edgeMat);
+      edgeLines.renderOrder = 16;
+      mesh.add(edgeLines);
+      group.userData.edgeLines = edgeLines;
 
       // 2. Radiant Inner Sparkling Jewel Core (Compact Jewel Scale)
       const innerJewelGeo = new THREE.OctahedronGeometry(0.075, 0);
@@ -3137,29 +3124,6 @@
           struts[idx].position.copy(mid);
           struts[idx].scale.set(1, Math.max(0.01, len - 0.70), 1);
           struts[idx].quaternion.setFromUnitVectors(yUnit, dir);
-        }
-      });
-
-      // High-Definition Anti-Aliased Volume Boundary Framework (Directly framing the 3D Volume Graph)
-      const volumePairs = [
-        [vTime, vCost],
-        [vCost, vQual],
-        [vQual, vTime],
-        [vTime, vScope],
-        [vCost, vScope],
-        [vQual, vScope]
-      ];
-
-      volumePairs.forEach(([pA, pB], idx) => {
-        const diff = new THREE.Vector3().subVectors(pB, pA);
-        const len = diff.length();
-        const dir = diff.clone().normalize();
-        const mid = new THREE.Vector3().addVectors(pA, pB).multiplyScalar(0.5);
-
-        if (volumeStruts[idx]) {
-          volumeStruts[idx].position.copy(mid);
-          volumeStruts[idx].scale.set(1, Math.max(0.01, len), 1);
-          volumeStruts[idx].quaternion.setFromUnitVectors(yUnit, dir);
         }
       });
 
