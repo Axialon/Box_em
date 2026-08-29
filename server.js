@@ -229,18 +229,16 @@ const server = http.createServer((req, res) => {
   if (pathname === '/api/donations/live') {
     if (!global.__boxemSupporters) {
       global.__boxemSupporters = [
-        { donorName: 'Design Systems Lab', amountUsd: 100.0, tier: 4, unlockedTheme: 'all', timestamp: new Date().toISOString() },
-        { donorName: 'OpenSource Backer', amountUsd: 50.0, tier: 3, unlockedTheme: 'all', timestamp: new Date().toISOString() },
-        { donorName: 'Quantum Dev Studio', amountUsd: 25.0, tier: 2, unlockedTheme: 'kintsugi', timestamp: new Date().toISOString() },
-        { donorName: 'Spatial Computing Collective', amountUsd: 15.0, tier: 2, unlockedTheme: 'kintsugi', timestamp: new Date().toISOString() }
+        { donorName: 'Founding Backer', amountUsd: 55.0, tier: 3, unlockedTheme: 'all', timestamp: new Date().toISOString() }
       ];
     }
-    const total = global.__boxemSupporters.reduce((sum, s) => sum + s.amountUsd, 1260);
+    const total = global.__boxemSupporters.reduce((sum, s) => sum + s.amountUsd, 0);
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(JSON.stringify({
       status: 'ok',
       totalUsd: total,
       targetUsd: 2500,
+      backerCount: global.__boxemSupporters.length,
       recent: global.__boxemSupporters
     }));
     return;

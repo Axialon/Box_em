@@ -64,13 +64,14 @@ const workerHandler = {
     if (request.method === 'GET' && url.pathname === '/api/donations/live') {
       try {
         if (!env || !env.DB) {
-          // Fallback mock payload for offline/local environment
+          // Fallback baseline payload for offline/local environment
           return new Response(JSON.stringify({
             status: 'ok',
-            totalUsd: 1450.0,
+            totalUsd: 55.0,
+            targetUsd: 2500,
+            backerCount: 1,
             recent: [
-              { donorName: 'OpenSource Backer', amountUsd: 50.0, unlockedTheme: 'kintsugi', timestamp: new Date().toISOString() },
-              { donorName: 'Design Systems Lab', amountUsd: 100.0, unlockedTheme: 'sapphire', timestamp: new Date().toISOString() }
+              { donorName: 'Founding Backer', amountUsd: 55.0, tier: 3, unlockedTheme: 'all', timestamp: new Date().toISOString() }
             ]
           }), { status: 200, headers: corsHeaders });
         }

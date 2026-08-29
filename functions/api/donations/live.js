@@ -7,20 +7,49 @@ export async function onRequestGet(context) {
     'Content-Type': 'application/json'
   };
 
-  const defaultSupporters = [
-    { donorName: 'Design Systems Lab', amountUsd: 100.0, tier: 4, unlockedTheme: 'all', timestamp: new Date(Date.now() - 3600000).toISOString() },
-    { donorName: 'OpenSource Studio', amountUsd: 50.0, tier: 3, unlockedTheme: 'all', timestamp: new Date(Date.now() - 7200000).toISOString() },
-    { donorName: 'Spatial Computing Collective', amountUsd: 25.0, tier: 2, unlockedTheme: 'kintsugi', timestamp: new Date(Date.now() - 14400000).toISOString() },
-    { donorName: 'Axialon AI Dev', amountUsd: 25.0, tier: 2, unlockedTheme: 'kintsugi', timestamp: new Date(Date.now() - 28800000).toISOString() },
-    { donorName: 'WebGL Graphics Guild', amountUsd: 15.0, tier: 1, unlockedTheme: 'kintsugi', timestamp: new Date(Date.now() - 43200000).toISOString() }
-  ];
+  try {
+    if (context.env?.DB) {
+      const { results } = await context.env.DB.prepare(
+        `SELECT d.id, s.donor_name as donorName, d.amount_usd as amountUsd, d.unlocked_theme as unlockedTheme, d.event_timestamp as timestamp 
+         FROM donation_events d 
+         LEFT JOIN supporters s ON d.supporter_id = s.id 
+         ORDER BY d.event_timestamp DESC LIMIT 15`
+      ).all();
 
-  const totalUsd = defaultSupporters.reduce((sum, s) => sum + s.amountUsd, 1250);
+      const sumRes = await context.env.DB.prepare(
+        `SELECT COALESCE(SUM(amount_usd), 0) as total, COUNT(id) as count FROM donation_events`
+      ).first();
+
+      const dbTotal = (sumRes && sumRes.total) ? parseFloat(sumRes.total) : 0;
+      const count = (sumRes && sumRes.count) ? parseInt(sumRes.count) : 0;
+
+      if (count > 0 && dbTotal > 0) {
+        return new Response(JSON.stringify({
+          status: 'ok',
+          totalUsd: dbTotal,
+          targetUsd: 2500,
+          backerCount: count,
+          recent: results || []
+        }), {
+          status: 200,
+          headers: corsHeaders
+        });
+      }
+    }
+  } catch (err) {
+    console.error('D1 query error:', err);
+  }
+
+  // Baseline real data: $55.00 USD (1 Backer)
+  const defaultSupporters = [
+    { donorName: 'Founding Backer', amountUsd: 55.0, tier: 3, unlockedTheme: 'all', timestamp: new Date().toISOString() }
+  ];
 
   return new Response(JSON.stringify({
     status: 'ok',
-    totalUsd: totalUsd,
+    totalUsd: 55.0,
     targetUsd: 2500,
+    backerCount: 1,
     recent: defaultSupporters
   }), {
     status: 200,

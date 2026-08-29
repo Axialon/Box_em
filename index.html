@@ -1167,9 +1167,9 @@
       <div>
         <div class="flex items-center gap-1.5">
           <span class="text-xs font-mono font-black text-slate-900 dark:text-slate-100 uppercase">Backing Pool</span>
-          <span id="tracker-amount-badge" class="text-xs font-mono font-black text-amber-700 dark:text-amber-400">$1,450 USD</span>
+          <span id="tracker-amount-badge" class="text-xs font-mono font-black text-amber-700 dark:text-amber-400">$55 USD</span>
         </div>
-        <div class="text-xs text-slate-600 dark:text-slate-400 font-mono font-bold">Live D1 Ticker • 3 Backers</div>
+        <div id="tracker-backer-count" class="text-xs text-slate-600 dark:text-slate-400 font-mono font-bold">Live D1 Ticker • 1 Backer</div>
       </div>
     </div>
   </div>
@@ -1867,10 +1867,10 @@
       <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-400/40 space-y-2.5">
         <div class="flex justify-between items-center text-xs font-mono">
           <span class="font-black text-amber-950 dark:text-amber-200">Total Open Source Backing</span>
-          <span id="ticker-total-usd" class="font-black text-amber-700 dark:text-amber-400 text-sm">$1,450.00 / $2,500 USD</span>
+          <span id="ticker-total-usd" class="font-black text-amber-700 dark:text-amber-400 text-sm">$55.00 / $2,500 USD</span>
         </div>
         <div class="w-full bg-amber-200 dark:bg-amber-900/60 rounded-full h-2 overflow-hidden">
-          <div id="ticker-progress-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 58%"></div>
+          <div id="ticker-progress-bar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 2%"></div>
         </div>
         <div class="text-[11px] text-amber-900 dark:text-amber-300 font-mono leading-relaxed">
           Developed by Club V Crew. 100% free perpetual open source. Voluntary one-time backing powers serverless edge hosting and quarterly 225+ matrix expansions.
@@ -4356,6 +4356,15 @@
           const res = await fetch('/api/donations/live');
           if (res.ok) {
             const data = await res.json();
+            const count = data.backerCount || (data.recent ? data.recent.length : 1);
+            const total = typeof data.totalUsd === 'number' ? data.totalUsd : 55.0;
+
+            const badgeEl = document.getElementById('tracker-amount-badge');
+            if (badgeEl) badgeEl.textContent = `$${Math.round(total).toLocaleString('en-US')} USD`;
+
+            const countEl = document.getElementById('tracker-backer-count');
+            if (countEl) countEl.textContent = `Live D1 Ticker • ${count} Backer${count === 1 ? '' : 's'}`;
+
             if (data.recent && data.recent.length > 0) {
               const listContainer = document.getElementById('ticker-list-container');
               if (listContainer) {
@@ -4369,14 +4378,14 @@
                   </div>
                 `).join('');
               }
-              const totalEl = document.getElementById('ticker-total-usd');
-              if (totalEl && data.totalUsd) {
-                totalEl.textContent = `$${data.totalUsd.toLocaleString('en-US', { minimumFractionDigits: 2 })} / $2,500 USD`;
-                const progressEl = document.getElementById('ticker-progress-bar');
-                if (progressEl) {
-                  const pct = Math.min(100, Math.round((data.totalUsd / 2500) * 100));
-                  progressEl.style.width = `${pct}%`;
-                }
+            }
+            const totalEl = document.getElementById('ticker-total-usd');
+            if (totalEl) {
+              totalEl.textContent = `$${total.toLocaleString('en-US', { minimumFractionDigits: 2 })} / $2,500 USD`;
+              const progressEl = document.getElementById('ticker-progress-bar');
+              if (progressEl) {
+                const pct = Math.max(2, Math.min(100, Math.round((total / 2500) * 100)));
+                progressEl.style.width = `${pct}%`;
               }
             }
           }
