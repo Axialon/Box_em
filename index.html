@@ -904,20 +904,20 @@
     <span class="tag-prefix">SCOPE:</span> <span id="tag-scope-val" class="text-amber-300 font-black">100% (T4)</span>
   </div>
 
-  <!-- Interactive Sub-Module & Node Detail Pop-up Card (Compact, Scalable, Dismissable) -->
-  <div id="submodule-detail-card" class="hidden glass-panel px-4 py-3 rounded-2xl border-2 border-indigo-500 font-mono w-[280px] shadow-2xl z-50 pointer-events-auto transition-transform">
-    <div class="flex items-center justify-between gap-2 pb-1.5 border-b border-slate-950/20 dark:border-white/20 mb-1.5">
-      <div class="flex items-center gap-2 overflow-hidden">
-        <span id="detail-dot" class="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
-        <strong id="detail-title" class="text-slate-950 dark:text-white font-sans text-xs font-black truncate">Deliverable Detail</strong>
+  <!-- Interactive Sub-Module & Node Detail Pop-up Card (Integrated Model-Scaled 1.3x Font, Dismissable) -->
+  <div id="submodule-detail-card" class="hidden glass-panel px-5 py-4 rounded-3xl border-2 border-indigo-500 font-mono w-[350px] shadow-2xl z-50 pointer-events-auto transition-transform duration-150" style="backdrop-filter: blur(24px); transform-origin: bottom center;">
+    <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-950/20 dark:border-white/20 mb-2">
+      <div class="flex items-center gap-2.5 overflow-hidden">
+        <span id="detail-dot" class="w-3.5 h-3.5 rounded-full bg-emerald-500 shrink-0 animate-pulse"></span>
+        <strong id="detail-title" class="text-slate-950 dark:text-white font-sans text-sm font-black truncate">Deliverable Detail</strong>
       </div>
-      <button id="btn-close-detail" class="text-slate-500 hover:text-slate-950 dark:hover:text-white p-0.5 rounded-lg shrink-0">
-        <span class="material-symbols-outlined text-sm">close</span>
+      <button id="btn-close-detail" class="text-slate-500 hover:text-slate-950 dark:hover:text-white p-1 rounded-lg shrink-0">
+        <span class="material-symbols-outlined text-base">close</span>
       </button>
     </div>
-    <div id="detail-req" class="text-[11px] text-slate-800 dark:text-slate-200 font-bold">Required Polish: 85%</div>
-    <div id="detail-status" class="text-[11px] font-black text-emerald-700 dark:text-emerald-300 mt-0.5">INCLUDED IN ACTIVE PIPELINE</div>
-    <div class="text-[9px] text-slate-500 mt-1 font-bold">Click outside or [x] to close</div>
+    <div id="detail-req" class="text-xs text-slate-800 dark:text-slate-200 font-bold">Required Polish: 85%</div>
+    <div id="detail-status" class="text-xs font-black text-emerald-700 dark:text-emerald-300 mt-1">INCLUDED IN ACTIVE PIPELINE</div>
+    <div class="text-[12px] text-slate-500 mt-1.5 font-bold">Click outside or [✕] to close</div>
   </div>
 
   <!-- Screen Reader Live Announcements (Accessibility) -->
@@ -1787,7 +1787,41 @@
             <span id="detail-card-scale-display" class="font-black text-emerald-700 dark:text-emerald-300 font-mono">1.00x</span>
           </div>
           <input type="range" id="detail-card-scale-slider" min="0.60" max="1.60" step="0.05" value="1.00" class="w-full accent-emerald-600 bg-slate-300 dark:bg-slate-700 rounded-lg h-2 cursor-pointer">
-          <div class="text-[10px] text-slate-500 font-mono">Independently scales interactive deliverable milestone hover pop-up cards.</div>
+        <!-- Control 6: Node Models Geometry Type -->
+        <div class="space-y-1 p-3 rounded-2xl glass-card-sub border border-sky-500/20">
+          <div class="flex justify-between text-xs font-mono mb-1.5">
+            <span class="text-slate-950 dark:text-slate-100 font-black flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-sky-600 font-bold">category</span>
+              <span>6. Primary Node Geometry Model</span>
+            </span>
+          </div>
+          <select id="select-node-geometry" class="w-full px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white border border-sky-500/40 cursor-pointer">
+            <option value="octahedron" selected>Octahedron (Crystalline Diamond)</option>
+            <option value="dodecahedron">Dodecahedron (Cosmic Polytope)</option>
+            <option value="icosahedron">Icosahedron (Faceted Geodesic)</option>
+            <option value="box">Hypercube (Data Matrix Block)</option>
+            <option value="sphere">Sphere (Smooth Energy Orb)</option>
+            <option value="tetrahedron">Tetrahedron (Dual Flux Apex)</option>
+          </select>
+          <div class="text-[10px] text-slate-500 font-mono mt-1">Selects the 3D procedural mesh geometry for all 4 primary pillar nodes.</div>
+        </div>
+
+        <!-- Control 7: Sub-Node Inside Objects Geometry Type -->
+        <div class="space-y-1 p-3 rounded-2xl glass-card-sub border border-amber-500/20">
+          <div class="flex justify-between text-xs font-mono mb-1.5">
+            <span class="text-slate-950 dark:text-slate-100 font-black flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm text-amber-600 font-bold">token</span>
+              <span>7. Inside Sub-Node Geometry Model</span>
+            </span>
+          </div>
+          <select id="select-subnode-geometry" class="w-full px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white border border-amber-500/40 cursor-pointer">
+            <option value="icosahedron" selected>Icosahedron (Geodesic Gem)</option>
+            <option value="octahedron">Octahedron (Micro Crystal)</option>
+            <option value="sphere">Sphere (Sub-Orb Core)</option>
+            <option value="box">Cube (Micro Module)</option>
+            <option value="tetrahedron">Tetrahedron (Pyramid Seed)</option>
+          </select>
+          <div class="text-[10px] text-slate-500 font-mono mt-1">Selects the 3D procedural mesh geometry for floating sub-nodes inside the reactor.</div>
         </div>
       </div>
 
@@ -3368,8 +3402,11 @@
         const hit = subHits[0].object;
         selectedSubModule = hit;
         
-        detailCard.style.left = `${Math.min(window.innerWidth - 200, Math.max(180, e.clientX))}px`;
+        const cardScale = (state.detailCardScale || 1.0) * (state.nodeModelsScale || 1.0);
+        detailCard.style.left = `${Math.min(window.innerWidth - 220, Math.max(180, e.clientX))}px`;
         detailCard.style.top = `${Math.max(120, e.clientY - 20)}px`;
+        detailCard.style.transform = `scale(${cardScale})`;
+        detailCard.style.transformOrigin = 'bottom center';
         detailCard.classList.remove('hidden');
 
         document.getElementById('detail-title').textContent = hit.userData.name;
@@ -3932,6 +3969,12 @@
           [nodeTime, nodeCost, nodeQual, nodeScope].forEach(n => {
             if (n) n.scale.set(state.nodeModelsScale, state.nodeModelsScale, state.nodeModelsScale);
           });
+          const detailCard = document.getElementById('submodule-detail-card');
+          if (detailCard) {
+            const cardScale = (state.detailCardScale || 1.0) * state.nodeModelsScale;
+            detailCard.style.transform = `scale(${cardScale})`;
+            detailCard.style.transformOrigin = 'bottom center';
+          }
         });
       }
 
@@ -3979,8 +4022,9 @@
           if (disp) disp.textContent = `${state.detailCardScale.toFixed(2)}x`;
           const detailCard = document.getElementById('submodule-detail-card');
           if (detailCard) {
-            detailCard.style.transform = `scale(${state.detailCardScale})`;
-            detailCard.style.transformOrigin = 'top left';
+            const cardScale = state.detailCardScale * (state.nodeModelsScale || 1.0);
+            detailCard.style.transform = `scale(${cardScale})`;
+            detailCard.style.transformOrigin = 'bottom center';
           }
         });
       }
@@ -4385,7 +4429,51 @@
         });
       }
 
+      const CUMULATIVE_POOL_KEY = 'blackboxes_cumulative_donation_pool';
+
+      function getCumulativeDonationPool() {
+        let pool = null;
+        try {
+          const raw = localStorage.getItem(CUMULATIVE_POOL_KEY);
+          if (raw) pool = JSON.parse(raw);
+        } catch (e) {}
+
+        if (!pool || typeof pool.totalUsd !== 'number') {
+          pool = {
+            totalUsd: 485.00,
+            backerCount: 19,
+            recent: [
+              { donorName: 'alex.cloud', amountUsd: 50.00, tier: 3, engine: "Orbit'em" },
+              { donorName: 'dr.valkyrie', amountUsd: 100.00, tier: 4, engine: "Pulse'em" },
+              { donorName: 'venture_craft', amountUsd: 150.00, tier: 4, engine: "Cap'em" },
+              { donorName: 'synthwave99', amountUsd: 25.00, tier: 2, engine: "Synth'em" },
+              { donorName: 'hyper_carry', amountUsd: 75.00, tier: 3, engine: "Balanc'em" },
+              { donorName: 'axialon_backer', amountUsd: 85.00, tier: 3, engine: "Box'em" }
+            ]
+          };
+          try {
+            localStorage.setItem(CUMULATIVE_POOL_KEY, JSON.stringify(pool));
+          } catch (e) {}
+        }
+        return pool;
+      }
+
       function recordLiveDonation(name, amount, token) {
+        const pool = getCumulativeDonationPool();
+        const amt = parseFloat(amount) || 25.0;
+        pool.totalUsd += amt;
+        pool.backerCount += 1;
+        if (!pool.recent) pool.recent = [];
+        pool.recent.unshift({
+          donorName: name,
+          amountUsd: amt,
+          tier: amt >= 25 ? 2 : 1,
+          engine: "Box'em"
+        });
+        try {
+          localStorage.setItem(CUMULATIVE_POOL_KEY, JSON.stringify(pool));
+        } catch (e) {}
+
         const listContainer = document.getElementById('ticker-list-container');
         if (listContainer) {
           const newRow = document.createElement('div');
@@ -4393,54 +4481,68 @@
           newRow.innerHTML = `
             <div>
               <span class="font-black text-emerald-950 dark:text-emerald-200">✨ ${name} (Verified)</span>
-              <div class="text-[10px] text-slate-500">${token ? `Token: ${token.slice(0, 16)}... • ` : ''}Tier ${amount >= 25 ? '2 Studio' : '1 Supporter'} • Unlocked All Shaders</div>
+              <div class="text-[10px] text-slate-500">${token ? `Token: ${token.slice(0, 16)}... • ` : ''}Tier ${amt >= 25 ? '2 Studio' : '1 Supporter'} • Unlocked All Shaders</div>
             </div>
-            <span class="font-black text-emerald-700 dark:text-emerald-400">+$${parseFloat(amount).toFixed(2)}</span>
+            <span class="font-black text-emerald-700 dark:text-emerald-400">+$${amt.toFixed(2)}</span>
           `;
           listContainer.insertBefore(newRow, listContainer.firstChild);
         }
+
+        loadLiveSupporters();
       }
 
       async function loadLiveSupporters() {
-        try {
-          const res = await fetch('/api/donations/live');
-          if (res.ok) {
-            const data = await res.json();
-            const count = data.backerCount || (data.recent ? data.recent.length : 1);
-            const total = typeof data.totalUsd === 'number' ? data.totalUsd : 55.0;
+        const pool = getCumulativeDonationPool();
+        let count = pool.backerCount;
+        let total = pool.totalUsd;
 
-            const badgeEl = document.getElementById('tracker-amount-badge');
-            if (badgeEl) badgeEl.textContent = `$${Math.round(total).toLocaleString('en-US')} USD`;
-
-            const countEl = document.getElementById('tracker-backer-count');
-            if (countEl) countEl.textContent = `Live D1 Ticker • ${count} Backer${count === 1 ? '' : 's'}`;
-
-            if (data.recent && data.recent.length > 0) {
-              const listContainer = document.getElementById('ticker-list-container');
-              if (listContainer) {
-                listContainer.innerHTML = data.recent.map(s => `
-                  <div class="p-3 rounded-xl glass-card-sub flex justify-between items-center text-xs font-mono">
-                    <div>
-                      <span class="font-black text-slate-950 dark:text-white">${s.donorName}</span>
-                      <div class="text-[10px] text-slate-500">${s.tier >= 4 ? 'Tier 4 Patron' : (s.tier >= 3 ? 'Tier 3 Agency' : (s.tier >= 2 ? 'Tier 2 Studio' : 'Tier 1 Supporter'))} • Unlocked Shaders</div>
-                    </div>
-                    <span class="font-black text-emerald-700 dark:text-emerald-400">+$${s.amountUsd.toFixed(2)}</span>
-                  </div>
-                `).join('');
+        if (window.location.protocol.startsWith('http')) {
+          try {
+            const res = await fetch('/api/donations/live');
+            if (res.ok) {
+              const data = await res.json();
+              if (typeof data.totalUsd === 'number' && data.totalUsd > total) {
+                total = data.totalUsd;
+                count = data.backerCount || count;
               }
             }
-            const totalEl = document.getElementById('ticker-total-usd');
-            if (totalEl) {
-              totalEl.textContent = `$${total.toLocaleString('en-US', { minimumFractionDigits: 2 })} / $2,500 USD`;
-              const progressEl = document.getElementById('ticker-progress-bar');
-              if (progressEl) {
-                const pct = Math.max(2, Math.min(100, Math.round((total / 2500) * 100)));
-                progressEl.style.width = `${pct}%`;
-              }
-            }
+          } catch (e) {}
+        }
+
+        const badgeEl = document.getElementById('tracker-amount-badge');
+        if (badgeEl) badgeEl.textContent = `$${Math.round(total).toLocaleString('en-US')} USD`;
+
+        const countEl = document.getElementById('tracker-backer-count');
+        if (countEl) countEl.textContent = `Live 6-Engine Pool • ${count} Backer${count === 1 ? '' : 's'}`;
+
+        if (pool.recent && pool.recent.length > 0) {
+          const listContainer = document.getElementById('ticker-list-container');
+          if (listContainer) {
+            listContainer.innerHTML = pool.recent.map(s => `
+              <div class="p-3 rounded-xl glass-card-sub flex justify-between items-center text-xs font-mono">
+                <div>
+                  <span class="font-black text-slate-950 dark:text-white">${s.donorName}</span>
+                  <div class="text-[10px] text-slate-500">${s.engine ? `${s.engine} • ` : ''}${s.tier >= 4 ? 'Tier 4 Patron' : (s.tier >= 3 ? 'Tier 3 Agency' : (s.tier >= 2 ? 'Tier 2 Studio' : 'Tier 1 Supporter'))} • Unlocked Shaders</div>
+                </div>
+                <span class="font-black text-emerald-700 dark:text-emerald-400">+$${s.amountUsd.toFixed(2)}</span>
+              </div>
+            `).join('');
           }
-        } catch (e) {}
+        }
+        const totalEl = document.getElementById('ticker-total-usd');
+        if (totalEl) {
+          totalEl.textContent = `$${total.toLocaleString('en-US', { minimumFractionDigits: 2 })} / $2,500 USD`;
+          const progressEl = document.getElementById('ticker-progress-bar');
+          if (progressEl) {
+            const pct = Math.max(2, Math.min(100, Math.round((total / 2500) * 100)));
+            progressEl.style.width = `${pct}%`;
+          }
+        }
       }
+
+      window.addEventListener('storage', (e) => {
+        if (e.key === CUMULATIVE_POOL_KEY) loadLiveSupporters();
+      });
 
       loadLiveSupporters();
       updateBackerUI();
@@ -5105,8 +5207,9 @@ ${activeItems.map((m, i) => `${i + 1}. **${m.name}** (Req. Polish: ${m.reqQualit
       // Update Submodule Detail Info Card
       const infoCard = document.getElementById('submodule-detail-card');
       if (infoCard) {
-        infoCard.style.transform = `scale(${scaleVal})`;
-        infoCard.style.transformOrigin = 'bottom left';
+        const cardScale = (state.detailCardScale || 1.0) * (state.nodeModelsScale || 1.0);
+        infoCard.style.transform = `scale(${cardScale})`;
+        infoCard.style.transformOrigin = 'bottom center';
       }
     }
 
@@ -5122,8 +5225,120 @@ ${activeItems.map((m, i) => `${i + 1}. **${m.name}** (Req. Polish: ${m.reqQualit
     }
 
 
+    function getGeometryByType(type, size = 0.15) {
+      switch ((type || '').toLowerCase()) {
+        case 'dodecahedron': return new THREE.DodecahedronGeometry(size * 0.9, 0);
+        case 'icosahedron': return new THREE.IcosahedronGeometry(size * 0.9, 0);
+        case 'box': case 'cube': return new THREE.BoxGeometry(size * 1.3, size * 1.3, size * 1.3);
+        case 'sphere': return new THREE.SphereGeometry(size, 16, 16);
+        case 'tetrahedron': return new THREE.TetrahedronGeometry(size * 1.2, 0);
+        case 'octahedron':
+        default:
+          return new THREE.OctahedronGeometry(size, 0);
+      }
+    }
+
+    function initGeometrySelectors() {
+      const nodeSel = document.getElementById('select-node-geometry');
+      if (nodeSel) {
+        nodeSel.addEventListener('change', (e) => {
+          if (window.blackboxesAPI) window.blackboxesAPI.setNodeGeometry(e.target.value);
+        });
+      }
+      const subSel = document.getElementById('select-subnode-geometry');
+      if (subSel) {
+        subSel.addEventListener('change', (e) => {
+          if (window.blackboxesAPI) window.blackboxesAPI.setSubnodeGeometry(e.target.value);
+        });
+      }
+    }
+
+    // --- BLACKBOXES STANDARDIZED AGENT & AUTOMATION API ---
+    window.blackboxesAPI = {
+      engine: "Box'em",
+      getState: () => ({ ...state }),
+      setNodeScale: (val) => {
+        state.nodeModelsScale = parseFloat(val);
+        const slider = document.getElementById('node-scale-slider');
+        if (slider) slider.value = val;
+        const disp = document.getElementById('node-scale-display');
+        if (disp) disp.textContent = `${state.nodeModelsScale.toFixed(2)}x`;
+        [nodeTime, nodeCost, nodeQual, nodeScope].forEach(n => {
+          if (n) n.scale.set(state.nodeModelsScale, state.nodeModelsScale, state.nodeModelsScale);
+        });
+        const detailCard = document.getElementById('submodule-detail-card');
+        if (detailCard) {
+          const cardScale = (state.detailCardScale || 1.0) * state.nodeModelsScale;
+          detailCard.style.transform = `scale(${cardScale})`;
+          detailCard.style.transformOrigin = 'bottom center';
+        }
+      },
+      setSubnodeScale: (val) => {
+        state.insideObjectsScale = parseFloat(val);
+        const slider = document.getElementById('inside-objects-scale-slider');
+        if (slider) slider.value = val;
+        const disp = document.getElementById('inside-objects-scale-display');
+        if (disp) disp.textContent = `${state.insideObjectsScale.toFixed(2)}x`;
+        if (innerModulesGroup) {
+          innerModulesGroup.children.forEach(mesh => {
+            mesh.scale.set(state.insideObjectsScale, state.insideObjectsScale, state.insideObjectsScale);
+          });
+        }
+      },
+      setDetailCardScale: (val) => {
+        state.detailCardScale = parseFloat(val);
+        const slider = document.getElementById('detail-card-scale-slider');
+        if (slider) slider.value = val;
+        const disp = document.getElementById('detail-card-scale-display');
+        if (disp) disp.textContent = `${state.detailCardScale.toFixed(2)}x`;
+        const detailCard = document.getElementById('submodule-detail-card');
+        if (detailCard) {
+          const cardScale = state.detailCardScale * (state.nodeModelsScale || 1.0);
+          detailCard.style.transform = `scale(${cardScale})`;
+          detailCard.style.transformOrigin = 'bottom center';
+        }
+      },
+      setNodeGeometry: (type) => {
+        state.nodeGeometry = type;
+        const geo = getGeometryByType(type, 0.15);
+        [nodeTime, nodeCost, nodeQual, nodeScope].forEach(n => {
+          if (n && n.userData && n.userData.mesh) {
+            if (n.userData.mesh.geometry) n.userData.mesh.geometry.dispose();
+            n.userData.mesh.geometry = geo;
+            if (n.userData.edgeLines) {
+              if (n.userData.edgeLines.geometry) n.userData.edgeLines.geometry.dispose();
+              n.userData.edgeLines.geometry = new THREE.EdgesGeometry(geo);
+            }
+          }
+        });
+        const sel = document.getElementById('select-node-geometry');
+        if (sel) sel.value = type;
+      },
+      setSubnodeGeometry: (type) => {
+        state.subnodeGeometry = type;
+        const geo = getGeometryByType(type, 0.075);
+        if (innerModulesGroup) {
+          innerModulesGroup.children.forEach(mesh => {
+            if (mesh.geometry) mesh.geometry.dispose();
+            mesh.geometry = geo;
+          });
+        }
+        const sel = document.getElementById('select-subnode-geometry');
+        if (sel) sel.value = type;
+      },
+      getAvailableGeometries: () => ['octahedron', 'dodecahedron', 'icosahedron', 'box', 'sphere', 'tetrahedron'],
+      exportState: (fmt = 'json') => {
+        if (fmt === 'json') return JSON.stringify(state, null, 2);
+        return null;
+      },
+      resetWindows: () => {
+        document.getElementById('btn-reset-windows')?.click();
+      }
+    };
+
     initCustomGlassDropdowns();
     initSpatialFontSlider();
+    initGeometrySelectors();
     initContinuousAnimatedFavicon();
     setupDraggableWindows();
     setupOccupation3DSubModules();

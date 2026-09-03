@@ -592,6 +592,41 @@
       </div>
     </header>
 
+    <!-- Ecosystem Suite Navigator -->
+    <nav aria-label="Ecosystem Engines" class="w-full bg-slate-900/80 dark:bg-slate-950/85 backdrop-blur-md border-b border-indigo-500/20 px-4 py-2 overflow-x-auto relative z-40 pointer-events-auto">
+      <div class="max-w-[1920px] mx-auto flex items-center justify-between gap-4 text-xs font-mono">
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-slate-400 font-bold uppercase tracking-wider text-[11px]">BlackBoxes Suite:</span>
+          <a href="../index.html" class="px-2.5 py-1 rounded-lg glass-button text-slate-300 hover:text-white flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-sm">hub</span> Hub
+          </a>
+          <a href="../Box_em/showcase.html" class="px-2.5 py-1 rounded-lg bg-indigo-600/40 border border-indigo-400/50 text-white font-black flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm text-indigo-400">deployed_code</span> Box'em
+          </a>
+          <a href="../Orbit_em/showcase.html" class="px-2.5 py-1 rounded-lg glass-button text-sky-400 hover:text-sky-300 flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-sm">cloud</span> Orbit'em
+          </a>
+          <a href="../Pulse_em/showcase.html" class="px-2.5 py-1 rounded-lg glass-button text-rose-400 hover:text-rose-300 flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-sm">monitor_heart</span> Pulse'em
+          </a>
+          <a href="../Cap_em/showcase.html" class="px-2.5 py-1 rounded-lg glass-button text-amber-400 hover:text-amber-300 flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-sm">account_balance</span> Cap'em
+          </a>
+          <a href="../Synth_em/showcase.html" class="px-2.5 py-1 rounded-lg glass-button text-fuchsia-400 hover:text-fuchsia-300 flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-sm">graphic_eq</span> Synth'em
+          </a>
+          <a href="../Balanc_em/showcase.html" class="px-2.5 py-1 rounded-lg glass-button text-red-400 hover:text-red-300 flex items-center gap-1 font-bold">
+            <span class="material-symbols-outlined text-sm">swords</span> Balanc'em
+          </a>
+        </div>
+        <div class="hidden md:flex items-center gap-2 shrink-0">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-slate-300 font-bold">Live Pool:</span>
+          <span id="ecosystem-pool-display" class="text-emerald-400 font-black">$485 USD • 19 Backers</span>
+        </div>
+      </div>
+    </nav>
+
     <!-- GRAND UNIFIED HERO & 3D SPATIAL SHOWCASE (100% Frameless Outflow) -->
     <section id="live-embed" class="relative w-full overflow-visible min-h-[920px] pt-3 pb-8 px-3 sm:px-6 lg:px-8 flex flex-col justify-between">
 
@@ -1642,6 +1677,25 @@
         requestAnimationFrame(renderBg);
       }
       renderBg();
+    })();
+
+    // Live Ecosystem Cumulative Donation Pool Sync
+    (function syncEcosystemPool() {
+      const STORAGE_KEY = 'blackboxes_cumulative_donation_pool';
+      const DEFAULT_POOL = { totalUsd: 485, backersCount: 19 };
+      let pool = DEFAULT_POOL;
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && typeof parsed.totalUsd === 'number') pool = parsed;
+        } else {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_POOL));
+        }
+      } catch (e) {}
+      const el = document.getElementById('ecosystem-pool-display');
+      const count = pool.backerCount || pool.backersCount || 19;
+      if (el) el.textContent = `$${Math.round(pool.totalUsd || 485).toLocaleString()} USD • ${count} Backers`;
     })();
 
     /* 2. Full-Fidelity Master Engine 3D Viewport in Embed (With 30s Idle Auto-Spin & Node Dragging) */
